@@ -1,5 +1,12 @@
 class Carton {
-
+    // TODO: REVISAR
+/*
+    val numeros = arrayOf(
+            arrayOf(null, null, null, null, null, null, null, null, null),
+            arrayOf(null, null, null, null, null, null, null, null, null),
+            arrayOf(null, null, null, null, null, null, null, null, null)
+    )
+*/
     init {
         println()
     }
@@ -16,9 +23,15 @@ class Carton {
 
     }
 
-    private fun Int.formatear(): Int{
-        if (this < 10) return "0$this".toInt() else return this
+    /**
+     * Formatea el numero con un 0 delante si es menor a 10. 4 -> 04
+     */
+    fun Int.formatear(): String{
+        return if (this < 10) "0$this" else this.toString()
+    }
 
+    fun comprobarNumero(num: Int){
+        for ()
     }
 
 }
