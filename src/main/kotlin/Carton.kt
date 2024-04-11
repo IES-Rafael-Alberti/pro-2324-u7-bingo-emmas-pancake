@@ -16,4 +16,9 @@ class Carton {
 
     }
 
+    private fun Int.formatear(): Int{
+        if (this < 10) return "0$this".toInt() else return this
+
+    }
+
 }
