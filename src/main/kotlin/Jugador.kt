@@ -3,10 +3,9 @@ class Jugador(val nombre: String){
 
 
     fun marcarNumero(numero: Int) {
-        cartones.forEach { Carton ->
-            if (numero in carton.numeros) {
-                carton.numerosMarcados.add(numero)
-            }
+        listaCartones.forEach {Carton->
+            Carton.comprobarNumero(numero)
         }
     }
 }
+interface
