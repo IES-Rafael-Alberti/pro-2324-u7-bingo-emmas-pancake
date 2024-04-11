@@ -4,6 +4,6 @@ interface Bombo {
 
     fun meterBolas()
 
-    fun sacarBolas(total: Int): List<Int>
+    fun sacarBolas(total: Int = 1): List<Int>
 
 }

@@ -14,9 +14,12 @@ class BomboLocal : Bombo {
 
 
     override fun sacarBolas(total: Int): List<Int> {
+        var bolasSacadas = mutableListOf<Int>()
+
         for (i in 1..total) {
             val bolaAleatoria = bolas[1]
-
+            bolasSacadas.add(bolaAleatoria)
+            this.bolas
         }
 
         //val bolasElegidas = bolas.subList(0, total)
