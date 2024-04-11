@@ -1,7 +1,7 @@
 class Carton {
 
     init {
-
+        println()
     }
 
     companion object {
