@@ -31,7 +31,7 @@ class Carton {
     }
 
     fun comprobarNumero(num: Int){
-        for ()
+        
     }
 
 }
