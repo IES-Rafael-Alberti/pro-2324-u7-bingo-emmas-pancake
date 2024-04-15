@@ -1,12 +1,14 @@
-class Jugador(val nombre: String){
+class Jugador(val nombre: String):IJugador {
     var listaCartones: MutableList<Carton> = mutableListOf()
 
-/*
-    fun marcarNumero(numero: Int) {
-        cartones.forEach { Carton ->
-            if (numero in carton.numeros) {
-                carton.numerosMarcados.add(numero)
-            }
+
+    override fun marcarNumero(numero: Int) {
+        listaCartones.forEach { carton ->
+            carton.comprobarNumero(numero)
         }
-    }*/
+    }
+}
+
+interface IJugador {
+    fun marcarNumero(numero: Int)
 }
