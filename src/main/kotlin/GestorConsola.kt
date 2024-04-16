@@ -16,7 +16,7 @@ class GestorConsola: IConsola {
     override fun pedirNombre(msg: String): String {
         var nombre: String?
         do {
-            imprimir("Nombre -> ", false)
+            imprimir(msg, false)
             nombre = readln()
             if (nombre.isBlank()) {
                 imprimir("No puede estar vacio. ")
@@ -27,10 +27,19 @@ class GestorConsola: IConsola {
     }
 
     override fun pedirNumero(msg: String): Int {
-        TODO("Not yet implemented")
+        var num: Int?
+        do {
+            imprimir( msg, false)
+            num = readln().toIntOrNull()
+            if (num == null) {
+                imprimir("Error - Entrada invalida.  ")
+            }
+        }while (num == null)
+        return num
     }
 
+
     override fun limipiar(nLines: Int) {
-        TODO("Not yet implemented")
+        imprimir("".repeat(nLines))
     }
 }
