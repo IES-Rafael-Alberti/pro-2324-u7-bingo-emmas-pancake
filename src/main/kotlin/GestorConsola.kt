@@ -41,5 +41,6 @@ class GestorConsola: IConsola {
 
     override fun limipiar(nLines: Int) {
         imprimir("".repeat(nLines))
+
     }
 }
