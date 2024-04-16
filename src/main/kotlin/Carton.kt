@@ -25,7 +25,7 @@ class Carton {
             Triple(1, 1, 3), Triple(1, 2, 2), Triple(1, 3, 1),
             Triple(2, 1, 2), Triple(2, 2, 1), Triple(3, 1, 1)
         )
-        lateinit var combinacion: Triple<Int, Int, Int>
+        private lateinit var combinacion: Triple<Int, Int, Int>
         var primerNumero:Int = 0
         var segundoNumero:Int = 0
         var tercerNumero:Int = 0
