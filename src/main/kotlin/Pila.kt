@@ -1,58 +1,59 @@
-/**
- * Clase que representa una pila genérica.
- * @param T el tipo de elementos que contendrá la pila.
- * @property pila Lista mutable que almacena los elementos de la pila.
- */
-class Pila <T>{
+open class Pila {
+    private val elementos: MutableList<Int> = mutableListOf()
 
-    private val pila = mutableListOf<T>()
-
-
-
-    /**
-     * Devuelve el elemento en la cima de la pila.
-     * @return el elemento en la cima de la pila o null si la pila está vacía.
+    /** Agrega una bola a la pila
+     *
+     * @param bola número de bola
      */
-    private fun top(): T?{
-        return pila.lastOrNull()
-    }
-
-    /**
-     * * Inserta un elemento en la cima de la pila.
-     * @param elemento el elemento a insertar.
-     */
-    fun push(elemento: T){
-        pila.add(elemento)
+    fun push(bola: Int) {
+        elementos.add(bola)
     }
 
 
-    /**
-     * Elimina y devuelve el elemento en la cima de la pila, o nulo si no hay
-     * @return el elemento eliminado o null si la pila está vacía.
+    /** Elimina la última bola agregada
+     *
+     * @return número de la bola
      */
-    fun pop(): T?{
-        if (isEmpty()) {
-            return null
+    fun pop(): Int? {
+        return if (isEmpty()) {
+            null
         } else {
-            return pila.removeAt(pila.size - 1)
+            elementos.removeAt(elementos.size - 1)
         }
     }
 
 
-    /**
-     * Verifica si la pila está vacía
-     * @return true si la pila está vacía, false en caso contrario.
-     */
-    private fun isEmpty(): Boolean{
-        return pila.isEmpty()
-    }
-
-
-    /**
+    /** Devuelve la última bola agregada
      *
-     * @return El tamaño de la pila.
+     * @return número de la bola
      */
-    fun size(): Int{
-        return pila.size
+    fun peek(): Int? {
+        return elementos.lastOrNull()
     }
+
+
+    /** Devuelve la cantidad de bolas de la pila
+     *
+     * @return número de bolas
+     */
+    fun size(): Int {
+        return elementos.size
+    }
+
+
+    /** Verifica si la pila está vacía
+     *
+     * @return depende de si está vacía o no
+     */
+    fun isEmpty(): Boolean {
+        return elementos.isEmpty()
+    }
+
+
+    /** Elimina todos los elementos de la pila
+     */
+    fun clear() {
+        elementos.clear()
+    }
+
 }
