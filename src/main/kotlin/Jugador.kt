@@ -16,16 +16,25 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
             return contadorIds
         }
     }
-    fun comprobarLineaBingo(){
-        listaCartones.forEach{carton->
-            val resultado= carton.comprobarLineaBingo()
-        }
-    }
 
     override fun marcarNumero(numero: Int){
             listaCartones.forEach { carton ->
                 carton.comprobarNumero(numero)
-                val resultado=carton.comprobarLineaBingo()
+                if (!linea){
+                    if (carton.comprobarLinea()){
+                        linea = true
+                    }
+                }
+                if (!a3Numeros){
+                    if (carton.comprobarA3Numeros()){
+                        a3Numeros = true
+                    }
+                }
+                if (!bingo){
+                    if (carton.comprobarBingo()){
+                        bingo = true
+                    }
+                }
             }
     }
 
@@ -41,5 +50,5 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
 }
 
 interface IJugador {
-    fun marcarNumero(numero: List<Int>)
+    fun marcarNumero(numero: Int)
 }

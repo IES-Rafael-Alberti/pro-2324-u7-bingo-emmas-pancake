@@ -228,44 +228,92 @@ class Carton {
         }
     }
 
-    fun comprobarLineaBingo(): String{
-        val frase= ""
-        if(linea)
-        return frase
-    }
-
-    override fun toString(): String {
-        var serie = ""
-        for (filas in casillas) {
-            serie += "|"
-            for (numeros in filas) {
-                if (numeros == null) {
-                    serie += "    |"
-                } else {
-                    if (numeros.numero < 10) {
-                        serie += " 0${numeros.numero} |"
-                    } else {
-                        serie += " ${numeros.numero} |"
+    fun comprobarLinea(): Boolean {
+        for (lineas in casillas){
+            var contadorLinea = 0
+            for (numero in lineas){
+                if (numero != null){
+                    if(numero.numeroSalido){
+                        contadorLinea++
                     }
-
                 }
             }
-            serie += "\n|"
-            for (numeros in filas) {
-                if (numeros == null) {
-                    serie += "    |"
-                } else {
-                    if (numeros.numeroSalido) {
-                        serie += " XX |"
-                    } else {
-                        serie += "    |"
-                    }
-
-                }
+            if (contadorLinea == 6){
+                return true
             }
-            serie += "\n"
         }
-        return serie
+        return false
+
     }
+
+    fun comprobarA3Numeros(): Boolean {
+        var contadorLinea = 0
+        for (lineas in casillas){
+            for (numero in lineas){
+                if (numero != null){
+                    if(numero.numeroSalido){
+                        contadorLinea++
+                    }
+                }
+            }
+            if (contadorLinea >= 15){
+                return true
+            }
+        }
+        return false
+
+    }
+
+    fun comprobarBingo(): Boolean {
+        var contadorLinea = 0
+        for (lineas in casillas){
+            for (numero in lineas){
+                if (numero != null){
+                    if(numero.numeroSalido){
+                        contadorLinea++
+                    }
+                }
+            }
+            if (contadorLinea == 18){
+                return true
+            }
+        }
+        return false
+
+    }
+
+//    override fun toString(): String {
+//        var serie = ""
+//        for (filas in casillas) {
+//            serie += "|"
+//            for (numeros in filas) {
+//                if (numeros == null) {
+//                    serie += "    |"
+//                } else {
+//                    if (numeros.numero < 10) {
+//                        serie += " 0${numeros.numero} |"
+//                    } else {
+//                        serie += " ${numeros.numero} |"
+//                    }
+//
+//                }
+//            }
+//            serie += "\n|"
+//            for (numeros in filas) {
+//                if (numeros == null) {
+//                    serie += "    |"
+//                } else {
+//                    if (numeros.numeroSalido) {
+//                        serie += " XX |"
+//                    } else {
+//                        serie += "    |"
+//                    }
+//
+//                }
+//            }
+//            serie += "\n"
+//        }
+//        return serie
+//    }
 
 }
