@@ -228,6 +228,12 @@ class Carton {
         }
     }
 
+    fun comprobarLineaBingo(): String{
+        val frase= ""
+        if(linea)
+        return frase
+    }
+
     override fun toString(): String {
         var serie = ""
         for (filas in casillas) {

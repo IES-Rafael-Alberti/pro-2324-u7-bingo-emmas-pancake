@@ -4,6 +4,9 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
     }
     var listaCartones: MutableList<Carton> = mutableListOf()
     val id: Int = generarIdUnica()
+    var linea:Boolean = false
+    var a3Numeros:Boolean = false
+    var bingo:Boolean = false
 
     companion object {
         private var contadorIds = 0
@@ -13,12 +16,17 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
             return contadorIds
         }
     }
-
-
-    override fun marcarNumero(numero: Int) {
-        listaCartones.forEach { carton ->
-            carton.comprobarNumero(numero)
+    fun comprobarLineaBingo(){
+        listaCartones.forEach{carton->
+            val resultado= carton.comprobarLineaBingo()
         }
+    }
+
+    override fun marcarNumero(numero: Int){
+            listaCartones.forEach { carton ->
+                carton.comprobarNumero(numero)
+                val resultado=carton.comprobarLineaBingo()
+            }
     }
 
     fun agregarCartones(num:Int) {
@@ -33,5 +41,5 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
 }
 
 interface IJugador {
-    fun marcarNumero(numero: Int)
+    fun marcarNumero(numero: List<Int>)
 }
