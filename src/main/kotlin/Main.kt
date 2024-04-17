@@ -1,10 +1,7 @@
 fun main(args: Array<String>) {
     val gestorConsola = GestorConsola()
-    val bomboLocal = BomboLocal(gestorConsola)
+
     val gestorFicheros = FicherosLog(gestorConsola)
-
-
-
 
 
     val (formato, rutaBingoCentral) = Utilidades.comprobarArgumentos(args, gestorConsola)
@@ -23,7 +20,22 @@ fun main(args: Array<String>) {
             GeneradorVisualCartonInterno()
         }
 
-    val logBingo = Utilidades.generarFicheroLogBingo()
+    val logBingo = gestorFicheros.crearFic(Utilidades.generarFicheroLogBingo(),Utilidades.getCabeceraLogoBingo())
+
+    if (logBingo != null){
+        val bingo = Bingo(gestorConsola, bombo, gestorFicheros)
+        try {
+            bingo.jugar()
+        }
+        catch (e: Exception) {
+            gestorConsola.imprimir("Error ${e.message}")
+        }
+
+    }else{
+        gestorConsola.imprimir("Error - No se pudo generar log Bingo")
+    }
+
+
 
 
 }

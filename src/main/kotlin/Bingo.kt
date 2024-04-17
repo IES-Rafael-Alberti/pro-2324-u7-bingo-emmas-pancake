@@ -3,6 +3,10 @@ class Bingo(
     private val bombo: IBombo,
     private val gestorFichero: IFicheros
 ) {
+    private val finJuego = false
+    private val lineaCantada = false
+    private val bingoCercaCantado = false
+
 
     init {
         val jugadores: List<Jugador> = crearJugadores(pedirCantidadJugadores())
@@ -53,5 +57,26 @@ class Bingo(
 
 
         return listaJugadores
+    }
+
+    fun jugar() {
+
+        while (!finJuego){
+
+            val listaNumeros = bombo.sacarBolas()
+
+            for (num in listaNumeros) {
+
+                //TODO : comprobarNumero()
+
+
+            }
+
+
+
+
+
+        }
+
     }
 }
