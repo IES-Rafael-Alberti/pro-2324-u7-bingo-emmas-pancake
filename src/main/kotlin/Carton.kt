@@ -24,8 +24,10 @@ val logBingo = Utilidades.generarFicheroLogBingo()
  * */
 
 class Carton {
+    private var posiciones:List<List<Int?>>
     init {
-        val posiciones = listaAleatoria()
+        //esta es la variable que tendra todos lo numeros
+        posiciones = listaAleatoria()
     }
 
     companion object {
@@ -108,20 +110,6 @@ class Carton {
             contador++
 
         }
-        for (numeross in numeros){
-            for (numero in numeross ){
-                if (numero ==null){
-                    print("   ")
-                }else {
-                    print(" $numero ")
-                }
-
-            }
-            println()
-
-
-        }
-        println("----------------------")
         return numeros
     }
 
@@ -222,23 +210,26 @@ class Carton {
         return numeros
     }
 
-    private fun crearCarton() {
-
-    }
-
-    private fun rellenarCarton() {
-
-    }
-
-    /**
-     * Formatea el numero con un 0 delante si es menor a 10. 4 -> 04
-     */
-    fun Int.formatear(): String {
-        return if (this < 10) "0$this" else this.toString()
-    }
-
     fun comprobarNumero(num: Int) {
 
+    }
+
+    override fun toString(): String {
+        var serie = ""
+        for (filas in posiciones){
+            for (numeros in filas ){
+                if (numeros ==null){
+                    serie += "    \n"
+                }else {
+                    if (numeros < 10){
+                        serie += " 0$numeros \n"
+                    }
+                    serie += " $numeros \n"
+                }
+
+            }
+        }
+        return serie
     }
 
 }
