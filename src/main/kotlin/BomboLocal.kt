@@ -13,7 +13,9 @@ class BomboLocal(private val gestorConsola: GestorConsola) : IBombo, IBomboPideB
         for (bola in bolas) {
             bomboLocal.push(bola)
         }
+
     }
+
 
     override fun setNumbolas(numBolas: NumBolas) {
         this.numBolas = numBolas
@@ -36,8 +38,5 @@ class BomboLocal(private val gestorConsola: GestorConsola) : IBombo, IBomboPideB
 
         return bolasSacadas
     }
-
-
-
 
 }
