@@ -24,34 +24,35 @@ val logBingo = Utilidades.generarFicheroLogBingo()
  * */
 
 class Carton {
-    private var posiciones:List<List<Int?>>
+
+    private val casillas: Array<Array<Casilla?>> = Array(FILAS) { Array(COLUMNAS) { null } }
+
     init {
         //esta es la variable que tendra todos lo numeros
-        posiciones = listaAleatoria()
+        listaAleatoria()
     }
 
     companion object {
-
-        const val ANCHURA = 46
-        private const val FILAS = 3
-        private const val COLUMNAS = 9
-
-
+        const val FILAS = 3
+        const val COLUMNAS = 9
+        const val NUMEROS_COLUMNAS = 6
         /**
          * Estas son la combinaciones posibles que puede haber en el carton
          * son permutaciones, en este caso tenemos 27 numero y tomamos 18 numeros
          * función matemática de la permutación: (falta comprobar si esto es verdad:D)
          * P(m,n) = m! /(m-n)!
          * @author Nicolás De Gomar
-        */
+         */
         private val combinaciones = listOf(
             Triple(1, 1, 3), Triple(1, 2, 2), Triple(1, 3, 1),
             Triple(2, 1, 2), Triple(2, 2, 1), Triple(3, 1, 1)
         )
+
         /**
          * esta es la combinacion elegida en este caso
          */
         private lateinit var combinacion: Triple<Int, Int, Int>
+
         /**
          * esta variable me marca que aqui tengo que poner dos numero en la parter de arriba del carton
          * ejemplo
@@ -59,7 +60,8 @@ class Carton {
          * fila 2: 1
          * fila 3: null
          * */
-        var primerNumero:Int = 0
+        var primerNumero: Int = 0
+
         /**
          * esta variable me marca que aqui tengo que poner dos numero en los extremos del carton
          * ejemplo
@@ -67,7 +69,8 @@ class Carton {
          * fila 2: null
          * fila 3: 1
          * */
-        var segundoNumero:Int = 0
+        var segundoNumero: Int = 0
+
         /**
          * esta variable me marca que aqui tengo que poner dos numero en la parte de abajo del carton
          * ejemplo
@@ -75,7 +78,7 @@ class Carton {
          * fila 2: 1
          * fila 3: 1
          * */
-        var tercerNumero:Int = 0
+        var tercerNumero: Int = 0
 
         /**
          * funcion privada
@@ -88,18 +91,12 @@ class Carton {
             segundoNumero = combinacion.second
             tercerNumero = combinacion.third
         }
-
     }
 
     /**
      * función pone los numeros sobre la lista posiciones
      * */
-    private fun listaAleatoria(): List<List<Int?>> {
-        var numeros: MutableList<MutableList<Int?>> = mutableListOf(
-            mutableListOf(null, null, null, null, null, null, null, null, null),
-            mutableListOf(null, null, null, null, null, null, null, null, null),
-            mutableListOf(null, null, null, null, null, null, null, null, null)
-        )
+    private fun listaAleatoria() {
         obtenercombinacion()
         val lista = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8).shuffled()
         //este contador me dice cuantas filas de 3 de 2 de 1 tiene el carton
@@ -107,63 +104,61 @@ class Carton {
         for (i in lista) {
             //el contador de 0 a 1 va a poner 3 numeros por columnas
             if (contador < 2) {
-                numeros = colocar3numeros(numeros, lista[i])
+                colocar3numeros(lista[i])
             } else {
                 //el contador de 2 a 6 va a poner 2 numeros por columnas
                 if (contador < 7) {
-                    numeros = colocar2numeros(numeros, lista[i])
+                    colocar2numeros(lista[i])
                 } else {
                     //el contador de 7 a 8 va a poner 1 numeros por columnas
-                    numeros = colocar1numeros(numeros, lista[i])
+                    colocar1numeros(lista[i])
                 }
             }
             contador++
 
         }
-        return numeros
     }
 
     /**
      * esta funcion te devuelve
      * numeros aleatorios
      * */
-    private fun obtenerNumeros(numero :Int,cantidad:Int): List<Int> {
+    private fun obtenerNumeros(numero: Int, cantidad: Int): List<Int> {
         val numeros = mutableListOf<Int>()
         var contador = 0
-        if ( numero == 0){
+        if (numero == 0) {
             val lista = mutableListOf<Int>()
-            for (i in 1..9){
+            for (i in 1..9) {
                 lista.add(i)
             }
-            while (contador != cantidad){
+            while (contador != cantidad) {
                 val number = lista.random().toString().toInt()
-                if (number !in numeros){
+                if (number !in numeros) {
                     numeros.add(number)
                     contador++
                 }
             }
         }
-        if ( numero == 8){
+        if (numero == 8) {
             val lista = mutableListOf<Int>()
-            for (i in 80..90){
+            for (i in 80..90) {
                 lista.add(i)
             }
-            while (contador != cantidad){
+            while (contador != cantidad) {
                 val number = lista.random().toString().toInt()
-                if (number !in numeros){
+                if (number !in numeros) {
                     numeros.add(number)
                     contador++
                 }
             }
-        }
-        else{
+        } else {
             val lista = mutableListOf<Int>()
-            for (i in numero*10..numero*10+9){
+            for (i in numero * 10..numero * 10 + 9) {
                 lista.add(i)
             }
-            while (contador != cantidad){
+            while (contador != cantidad) {
                 val number = lista.random().toString().toInt()
-                if (number !in numeros){
+                if (number !in numeros) {
                     numeros.add(number)
                     contador++
                 }
@@ -172,56 +167,53 @@ class Carton {
         return numeros
     }
 
-    private fun colocar3numeros(numeros: MutableList<MutableList<Int?>>, posicion: Int): MutableList<MutableList<Int?>> {
-        val numero= obtenerNumeros(posicion,3).sorted()
+    private fun colocar3numeros(posicion: Int) {
+        val numero = obtenerNumeros(posicion, 3).sorted()
         for (i in 0..2) {
-            numeros[i][posicion] = numero[i]
+            casillas[i][posicion] = Casilla(numero[i])
         }
-        return numeros
     }
 
-    private fun colocar2numeros(numeros: MutableList<MutableList<Int?>>, posicion: Int): MutableList<MutableList<Int?>> {
-        val numero= obtenerNumeros(posicion,2).sorted()
+    private fun colocar2numeros(posicion: Int) {
+        val numero = obtenerNumeros(posicion, 2).sorted()
         if (primerNumero != 0) {
             primerNumero -= 1
             for (i in 0..1) {
-                numeros[i][posicion] = numero[i]
+                casillas[i][posicion] = Casilla(numero[i])
             }
         } else {
             if (segundoNumero != 0) {
                 segundoNumero -= 1
-                numeros[0][posicion] = numero[0]
-                numeros[2][posicion] = numero[1]
+                casillas[0][posicion] = Casilla(numero[0])
+                casillas[2][posicion] = Casilla(numero[1])
             } else {
                 if (tercerNumero != 0) {
                     tercerNumero -= 1
                     for (j in 1..2) {
-                        numeros[j][posicion] = numero[j-1]
+                        casillas[j][posicion] = Casilla(numero[j - 1])
                     }
                 }
             }
         }
-        return numeros
     }
 
-    private fun colocar1numeros(numeros: MutableList<MutableList<Int?>>, posicion: Int): MutableList<MutableList<Int?>> {
+    private fun colocar1numeros(posicion: Int) {
 
-        val numero = obtenerNumeros(posicion,1)
-        val fila0 = numeros[0].filterNotNull().count()
-        val fila1 = numeros[1].filterNotNull().count()
-        val fila2 = numeros[2].filterNotNull().count()
-        if (fila0 != 6 && fila0 < 6){
-            numeros[0][posicion] = numero[0]
-        }else{
-            if (fila1 != 6 && fila1 < 6){
-                numeros[1][posicion] = numero[0]
-            }else{
-                if (fila2 != 6 && fila2 < 6){
-                    numeros[2][posicion] = numero[0]
+        val numero = obtenerNumeros(posicion, 1)
+        val fila0 = casillas[0].filterNotNull().count()
+        val fila1 = casillas[1].filterNotNull().count()
+        val fila2 = casillas[2].filterNotNull().count()
+        if (fila0 != NUMEROS_COLUMNAS && fila0 < NUMEROS_COLUMNAS) {
+            casillas[0][posicion] = Casilla(numero[0])
+        } else {
+            if (fila1 != NUMEROS_COLUMNAS && fila1 < NUMEROS_COLUMNAS) {
+                casillas[1][posicion] = Casilla(numero[0])
+            } else {
+                if (fila2 != NUMEROS_COLUMNAS && fila2 < NUMEROS_COLUMNAS) {
+                    casillas[2][posicion] = Casilla(numero[0])
                 }
             }
         }
-        return numeros
     }
 
     fun comprobarNumero(num: Int) {
@@ -230,16 +222,29 @@ class Carton {
 
     override fun toString(): String {
         var serie = ""
-        for (filas in posiciones){
-            serie+= "|"
-            for (numeros in filas ){
-                if (numeros ==null){
+        for (filas in casillas) {
+            serie += "|"
+            for (numeros in filas) {
+                if (numeros == null) {
                     serie += "    |"
-                }else {
-                    if (numeros < 10){
-                        serie += " 0$numeros |"
-                    }else{
-                        serie += " $numeros |"
+                } else {
+                    if (numeros.numero < 10) {
+                        serie += " 0${numeros.numero} |"
+                    } else {
+                        serie += " ${numeros.numero} |"
+                    }
+
+                }
+            }
+            serie += "\n|"
+            for (numeros in filas) {
+                if (numeros == null) {
+                    serie += "    |"
+                } else {
+                    if (numeros.numeroSalido) {
+                        serie += " XX |"
+                    } else {
+                        serie += "    |"
                     }
 
                 }
