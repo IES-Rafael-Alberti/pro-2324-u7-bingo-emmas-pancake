@@ -18,13 +18,16 @@ class GestorConsola: IConsola {
         return nombre
     }
 
-    override fun pedirNumero(msg: String): Int {
+    override fun pedirNumero(msg: String,min:Int,max:Int): Int {
         var num: Int?
         do {
             imprimir( msg, false)
             num = readln().toIntOrNull()
-            if (num == null) {
-                imprimir("Error - Entrada invalida.  ")
+            if (num != null) {
+                if (num < min || num > max) {
+                    imprimir("Error - Entrada invalida.  ")
+                    num = null
+                }
             }
         }while (num == null)
         return num

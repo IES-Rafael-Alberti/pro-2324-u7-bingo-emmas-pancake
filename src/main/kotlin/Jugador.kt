@@ -1,12 +1,14 @@
 class Jugador(val nombre: String, numCartones: Int):IJugador {
-    init{
-        agregarCartones(numCartones)
-    }
+
     var listaCartones: MutableList<Carton> = mutableListOf()
     val id: Int = generarIdUnica()
     var linea:Boolean = false
     var a3Numeros:Boolean = false
     var bingo:Boolean = false
+
+    init{
+        agregarCartones(numCartones)
+    }
 
     companion object {
         private var contadorIds = 0
@@ -40,7 +42,8 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
 
     fun agregarCartones(num:Int) {
         for (i in 0..num){
-            listaCartones.add(Carton())
+            val carton = Carton()
+            listaCartones.add(carton)
         }
     }
 

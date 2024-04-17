@@ -92,7 +92,7 @@ class Utilidades {
          * @return El número de jugadores.
          */
         fun preguntarJugadores(consola: IConsola) : Int {
-            return consola.pedirNumero("Introduzca el número de jugadores (1-3): ")
+            return consola.pedirNumero("Introduzca el número de jugadores (1-3): ",1,3)
         }
 
         /**
@@ -102,7 +102,7 @@ class Utilidades {
          * @return El número de cartones por jugador.
          */
         fun preguntarCartones(consola: IConsola) : Int {
-            return consola.pedirNumero("Introduzca el número de cartones (1-2): ")
+            return consola.pedirNumero("Introduzca el número de cartones (1-2): ",1,2)
         }
 
         /**
