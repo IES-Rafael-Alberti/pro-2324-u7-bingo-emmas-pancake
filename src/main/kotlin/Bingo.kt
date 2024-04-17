@@ -5,6 +5,10 @@ class Bingo {
     }
 
 
+    /** Pide al usuario la cantidad de jugadores que forman la partida
+     *
+     * @return cantidad de jugadores de la partida sin contar la IA
+     */
     private fun pedirCantidadJugadores(): Int {
         var cantidadJugadores = 0
         while (cantidadJugadores > 3 || cantidadJugadores < 1) {
@@ -16,6 +20,12 @@ class Bingo {
     }
 
 
+    /** Crea una lista con todos los jugadores
+     *
+     * @param cantidadJugadores Cantidad de jugadores sin contar con la IA
+     *
+     * @return La lista con todos los jugadores
+     */
     private fun crearJugadores(cantidadJugadores: Int): List<Jugador> {
         val listaJugadores = mutableListOf<Jugador>()
         listaJugadores.add(Jugador("GladOS"))
