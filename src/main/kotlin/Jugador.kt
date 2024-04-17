@@ -1,4 +1,7 @@
 class Jugador(val nombre: String, numCartones: Int):IJugador {
+    init{
+        agregarCartones(numCartones)
+    }
     var listaCartones: MutableList<Carton> = mutableListOf()
     val id: Int = generarIdUnica()
 
@@ -18,6 +21,11 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
         }
     }
 
+    fun agregarCartones(num:Int) {
+        for (i in 0..num){
+            listaCartones.add(Carton())
+        }
+    }
 
     override fun toString(): String {
         return "Jugador $id - $nombre\n $listaCartones"
