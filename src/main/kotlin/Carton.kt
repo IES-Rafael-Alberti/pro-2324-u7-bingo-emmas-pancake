@@ -217,7 +217,15 @@ class Carton {
     }
 
     fun comprobarNumero(num: Int) {
-
+        for (casilla in casillas) {
+            for (numero in casilla){
+                if (numero != null) {
+                    if (numero.numero == num){
+                        numero.numeroSalido=true
+                    }
+                }
+            }
+        }
     }
 
     override fun toString(): String {
