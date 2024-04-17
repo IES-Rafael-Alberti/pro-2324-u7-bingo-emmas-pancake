@@ -15,7 +15,7 @@ open class Pila<Int> {
      * @return número de la bola
      */
     fun pop(): Int? {
-        return if (isEmpty()) {
+        return if (isPilaEmpty()) {
             null
         } else {
             elementos.removeAt(elementos.size - 1)
@@ -45,7 +45,7 @@ open class Pila<Int> {
      *
      * @return depende de si está vacía o no
      */
-    fun isEmpty(): Boolean {
+    private fun isPilaEmpty(): Boolean {
         return elementos.isEmpty()
     }
 

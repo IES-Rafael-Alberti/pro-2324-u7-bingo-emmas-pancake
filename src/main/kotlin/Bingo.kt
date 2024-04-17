@@ -40,7 +40,7 @@ class Bingo(
     }
 
 
-    fun cambiarGeneracionBolas(jugador: Jugador) {
+    private fun cambiarGeneracionBolas(jugador: Jugador) {
         if (bombo is IBomboPideBolas) {
 
             if (jugador.linea && !lineaCantada) {
@@ -69,6 +69,10 @@ class Bingo(
                         cambiarGeneracionBolas(jugador)
                     } else if (!bingoCercaCantado) {
                         cambiarGeneracionBolas(jugador)
+                    }
+
+                    if (jugador.bingo) {
+                        finJuego
                     }
 
                 }
