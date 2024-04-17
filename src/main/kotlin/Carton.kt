@@ -229,7 +229,7 @@ class Carton {
         }
     }
 
-    fun comprobarLinea(): Boolean {
+    fun comprobarLinea(nombre:String): Boolean {
         for (lineas in casillas){
             var contadorNumerosSalidos = 0
             for (numero in lineas){
@@ -240,7 +240,7 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos == 6){
-                println("LINEAAA")
+                println("$nombre LINEAAA")
                 return true
             }
         }
@@ -248,7 +248,7 @@ class Carton {
 
     }
 
-    fun comprobarA3Numeros(): Boolean {
+    fun comprobarA3Numeros(nombre:String): Boolean {
         var contadorNumerosSalidos = 0
         for (lineas in casillas){
             for (numero in lineas){
@@ -259,7 +259,7 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos <= 15){
-                println("A 3 NUMEROS")
+                println("$nombre A 3 NUMEROS")
                 return true
             }
         }
@@ -267,7 +267,7 @@ class Carton {
 
     }
 
-    fun comprobarBingo(): Boolean {
+    fun comprobarBingo(nombre:String): Boolean {
         var contadorNumerosSalidos = 0
         for (lineas in casillas){
             for (numero in lineas){
@@ -278,7 +278,8 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos == 18){
-                println("BINGO")
+                println("$nombre BINGO")
+                readln()
                 return true
             }
         }
