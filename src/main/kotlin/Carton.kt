@@ -86,7 +86,7 @@ class Carton {
     }
 
     /**
-     * función pone los numeros sobre el carton
+     * función pone los numeros sobre la lista posiciones
      * */
     private fun listaAleatoria(): List<List<Int?>> {
         var numeros: MutableList<MutableList<Int?>> = mutableListOf(
@@ -96,14 +96,18 @@ class Carton {
         )
         obtenercombinacion()
         val lista = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8).shuffled()
+        //este contador me dice cuantas filas de 3 de 2 de 1 tiene el carton
         var contador = 0
         for (i in lista) {
+            //el contador de 0 a 1 va a poner 3 numeros por columnas
             if (contador < 2) {
                 numeros = colocar3numeros(numeros, lista[i])
             } else {
+                //el contador de 2 a 6 va a poner 2 numeros por columnas
                 if (contador < 7) {
                     numeros = colocar2numeros(numeros, lista[i])
                 } else {
+                    //el contador de 7 a 8 va a poner 1 numeros por columnas
                     numeros = colocar1numeros(numeros, lista[i])
                 }
             }
@@ -113,6 +117,10 @@ class Carton {
         return numeros
     }
 
+    /**
+     * esta funcion te devuelve
+     * numeros aleatorios
+     * */
     private fun obtenerNumeros(numero :Int,cantidad:Int): List<Int> {
         val numeros = mutableListOf<Int>()
         var contador = 0
@@ -217,17 +225,20 @@ class Carton {
     override fun toString(): String {
         var serie = ""
         for (filas in posiciones){
+            serie+= "|"
             for (numeros in filas ){
                 if (numeros ==null){
-                    serie += "    \n"
+                    serie += "    |"
                 }else {
                     if (numeros < 10){
-                        serie += " 0$numeros \n"
+                        serie += " 0$numeros |"
+                    }else{
+                        serie += " $numeros |"
                     }
-                    serie += " $numeros \n"
-                }
 
+                }
             }
+            serie += "\n"
         }
         return serie
     }
