@@ -240,6 +240,7 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos == 6){
+                println("LINEAAA")
                 return true
             }
         }
@@ -257,7 +258,8 @@ class Carton {
                     }
                 }
             }
-            if (contadorNumerosSalidos >= 15){
+            if (contadorNumerosSalidos <= 15){
+                println("A 3 NUMEROS")
                 return true
             }
         }
@@ -276,6 +278,7 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos == 18){
+                println("BINGO")
                 return true
             }
         }
