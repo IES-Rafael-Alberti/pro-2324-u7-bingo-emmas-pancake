@@ -1,5 +1,5 @@
-class BomboLocal : Bombo {
-    override val bolas: MutableList<Int> = mutableListOf()
+class BomboLocal(private val gestorConsola: GestorConsola) : Bombo {
+    private val bomboLocal = Pila<Int>()
 
     init {
         meterBolas()
@@ -7,25 +7,27 @@ class BomboLocal : Bombo {
 
 
     override fun meterBolas() {
-        for (i in 1..90) {
-            bolas.add(i)
+        val bolas = (1..90).toList().shuffled()
+
+        for (bola in bolas) {
+            bomboLocal.push(bola)
         }
     }
 
 
     override fun sacarBolas(total: Int): List<Int> {
-        var bolasSacadas = mutableListOf<Int>()
-        var bolasElegidas = mutableListOf<Int>()
+        val bolasSacadas = mutableListOf<Int>()
 
         for (i in 1..total) {
-            val bolaAleatoria = bolas[1]
-            bolasSacadas.add(bolaAleatoria)
-            this.bolas
+            val bolaSacada = bomboLocal.pop()
+            if (bolaSacada != null){
+                bolasSacadas.add(bolaSacada)
+            }else{
+                gestorConsola.imprimir("La pila esta vacia.")
+            }
         }
 
-        //val bolasElegidas = bolas.subList(0, total)
-        //bolas.removeAll(bolasElegidas)
-        return bolasElegidas
+        return bolasSacadas
     }
 
 }
