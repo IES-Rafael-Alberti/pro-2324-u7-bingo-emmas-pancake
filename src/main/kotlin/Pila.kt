@@ -1,4 +1,4 @@
-open class Pila {
+open class Pila<Int> {
     private val elementos: MutableList<Int> = mutableListOf()
 
     /** Agrega una bola a la pila
@@ -36,7 +36,7 @@ open class Pila {
      *
      * @return número de bolas
      */
-    fun size(): Int {
+    fun size(): kotlin.Int {
         return elementos.size
     }
 
