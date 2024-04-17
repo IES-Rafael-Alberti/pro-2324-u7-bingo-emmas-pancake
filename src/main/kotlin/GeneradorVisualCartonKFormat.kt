@@ -24,7 +24,7 @@ class GeneradorVisualCartonKFormat() : IGeneradorVisualCarton {
                 )
                 row(
                     *(fila.map { casilla ->
-                        casilla?.let { if (it.acertada) "XX" else "" }
+                        casilla?.let { if (it.numeroSalido) "XX" else "" }
                             ?: ""
                     }.toTypedArray())
                 )
