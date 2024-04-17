@@ -24,7 +24,7 @@ class GeneradorVisualCartonInterno() : IGeneradorVisualCarton {
             resultado += "| "
 
             for (posicion in fila) {
-                if (posicion != null && posicion.acertada) {
+                if (posicion != null && posicion.numeroSalido) {
                     resultado += "xx | "
                 } else {
                     resultado += "   | "

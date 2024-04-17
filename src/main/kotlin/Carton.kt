@@ -36,6 +36,7 @@ class Carton {
         const val FILAS = 3
         const val COLUMNAS = 9
         const val NUMEROS_COLUMNAS = 6
+        const val ANCHURA = 46
         /**
          * Estas son la combinaciones posibles que puede haber en el carton
          * son permutaciones, en este caso tenemos 27 numero y tomamos 18 numeros
