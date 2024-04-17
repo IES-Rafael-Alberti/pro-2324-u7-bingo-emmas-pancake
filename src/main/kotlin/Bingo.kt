@@ -3,13 +3,13 @@ class Bingo(
     private val bombo: IBombo,
     private val gestorFichero: IFicheros
 ) {
-    private val finJuego = false
-    private val lineaCantada = false
-    private val bingoCercaCantado = false
+    private var finJuego = false
+    private var lineaCantada = false
+    private var bingoCercaCantado = false
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
 
     companion object {
-        private const val NOMBRE_JUGADOR_RED = "EMMAS_PANCAKE"
+        private const val NOMBRE_JUGADOR_RED = "LOS_EMMANUELES"
     }
 
 
@@ -40,24 +40,42 @@ class Bingo(
     }
 
 
-    fun jugar() {
+    fun cambiarGeneracionBolas(jugador: Jugador) {
+        if (bombo is IBomboPideBolas) {
 
-        while (!finJuego){
-
-            val listaNumeros = bombo.sacarBolas()
-
-            for (num in listaNumeros) {
-
-                //TODO : comprobarNumero()
-
-
+            if (jugador.linea && !lineaCantada) {
+                bombo.setNumbolas(NumBolas.LINEA)
+                lineaCantada = true
             }
 
-
-
-
-
+            if (jugador.a3Numeros && !bingoCercaCantado) {
+                bombo.setNumbolas(NumBolas.A3NUMEROS)
+                bingoCercaCantado = true
+            }
         }
 
     }
+
+
+    fun jugar() {
+        while (!finJuego){
+            val listaNumeros = bombo.sacarBolas()
+            for (num in listaNumeros) {
+
+                for (jugador in jugadores) {
+                    jugador.marcarNumero(num)
+
+                    if (!lineaCantada) {
+                        cambiarGeneracionBolas(jugador)
+                    } else if (!bingoCercaCantado) {
+                        cambiarGeneracionBolas(jugador)
+                    }
+
+                }
+
+            }
+
+        }
+    }
+
 }
