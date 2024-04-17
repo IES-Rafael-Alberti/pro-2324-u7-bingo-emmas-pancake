@@ -1,17 +1,19 @@
 fun main(args: Array<String>) {
-    val consola = Consola()
     val gestorConsola = GestorConsola()
-    val bomboLocal = IBomboLocal(gestorConsola)
-    val bingo = Bingo()
+    val bomboLocal = BomboLocal(gestorConsola)
+    val gestorFicheros = FicherosLog(gestorConsola)
 
-    val (formato, rutaFichero, ficheroBingoCentral) = Utilidades.comprobarArgumentos(args, consola)
+
+
+
+
+    val (formato, rutaBingoCentral) = Utilidades.comprobarArgumentos(args, gestorConsola)
 
     val bombo =
-        if (rutaFichero != null && ficheroBingoCentral != null) {
-            BomboCentral(ficheroBingoCentral, gestorFich)
+        if (rutaBingoCentral != null) {
+            BomboCentral()
         } else {
-            BomboLocal()
-
+            BomboLocal(gestorConsola)
         }
 
     val genVisualCarton =
@@ -22,4 +24,6 @@ fun main(args: Array<String>) {
         }
 
     val logBingo = Utilidades.generarFicheroLogBingo()
+
+
 }

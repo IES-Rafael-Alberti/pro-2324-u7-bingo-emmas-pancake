@@ -31,6 +31,12 @@ class Carton {
     }
 
     companion object {
+
+        const val ANCHURA = 46
+        private const val FILAS = 3
+        private const val COLUMNAS = 9
+
+
         /**
          * Estas son la combinaciones posibles que puede haber en el carton
          * son permutaciones, en este caso tenemos 27 numero y tomamos 18 numeros

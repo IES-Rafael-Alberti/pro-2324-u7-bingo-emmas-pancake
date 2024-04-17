@@ -1,4 +1,8 @@
-class Bingo(private val consola: IConsola, private val bombo: IBombo) {
+class Bingo(
+    private val consola: IConsola,
+    private val bombo: IBombo,
+    private val gestorFichero: IFicheros
+) {
 
     init {
         val jugadores: List<Jugador> = crearJugadores(pedirCantidadJugadores())
