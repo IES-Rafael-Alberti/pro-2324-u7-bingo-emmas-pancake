@@ -1,7 +1,11 @@
-class Bingo {
+class Bingo(private val consola: IConsola, private val bombo: IBombo) {
 
     init {
         val jugadores: List<Jugador> = crearJugadores(pedirCantidadJugadores())
+    }
+
+    companion object {
+        private const val NOMBRE_JUGADOR_RED = "EMMAS_PANCAKE"
     }
 
 
@@ -28,14 +32,22 @@ class Bingo {
      */
     private fun crearJugadores(cantidadJugadores: Int): List<Jugador> {
         val listaJugadores = mutableListOf<Jugador>()
-        listaJugadores.add(Jugador("GladOS"))
 
-        for (i in 1..cantidadJugadores) {
-            println("Introduce el nombre del jugador ${i + 1}: ")
-            listaJugadores.add(Jugador(readln()))
+        if (bombo is IBomboPideBolas) {
+            //Pedir num cartones
+
+            listaJugadores.add(Jugador("GladOS", 2))
+
+            for (i in 1..cantidadJugadores) {
+                println("Introduce el nombre del jugador ${i + 1}: ")
+                listaJugadores.add(Jugador(readln(), 2))
+            }
         }
+        else {
+            listaJugadores.add(Jugador(NOMBRE_JUGADOR_RED, 2))
+        }
+
 
         return listaJugadores
     }
-
 }

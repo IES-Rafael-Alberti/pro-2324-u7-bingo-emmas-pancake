@@ -1,5 +1,6 @@
-class BomboLocal(private val gestorConsola: GestorConsola) : Bombo {
+class BomboLocal(private val gestorConsola: GestorConsola) : IBombo, IBomboPideBolas {
     private val bomboLocal = Pila<Int>()
+    private var numBolas = NumBolas.ALETORIO
 
     init {
         meterBolas()
@@ -14,9 +15,15 @@ class BomboLocal(private val gestorConsola: GestorConsola) : Bombo {
         }
     }
 
+    override fun setNumbolas(numBolas: NumBolas) {
+        this.numBolas = numBolas
+    }
 
-    override fun sacarBolas(total: Int): List<Int> {
+
+    override fun sacarBolas(): List<Int> {
         val bolasSacadas = mutableListOf<Int>()
+
+        val total = (numBolas.min..numBolas.max).random()
 
         for (i in 1..total) {
             val bolaSacada = bomboLocal.pop()
