@@ -3,11 +3,32 @@ class Bingo(
     private val bombo: IBombo,
     private val gestorFichero: IFicheros
 ) {
+    private val finJuego = false
+    private val lineaCantada = false
+    private val bingoCercaCantado = false
 
-    val jugadores: Array<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
+
+    init {
+        val jugadores: List<Jugador> = crearJugadores(pedirCantidadJugadores())
+    }
 
     companion object {
         private const val NOMBRE_JUGADOR_RED = "EMMAS_PANCAKE"
+    }
+
+
+    /** Pide al usuario la cantidad de jugadores que forman la partida
+     *
+     * @return cantidad de jugadores de la partida sin contar la IA
+     */
+    private fun pedirCantidadJugadores(): Int {
+        var cantidadJugadores = 0
+        while (cantidadJugadores > 3 || cantidadJugadores < 1) {
+            println("Introduce la cantidad de jugadores (1-3): ")
+            cantidadJugadores = readln().toInt()
+        }
+
+        return cantidadJugadores
     }
 
 
@@ -17,38 +38,45 @@ class Bingo(
      *
      * @return La lista con todos los jugadores
      */
-    private fun crearJugadores(cantidadJugadores: Int): Array<Jugador> {
+    private fun crearJugadores(cantidadJugadores: Int): List<Jugador> {
         val listaJugadores = mutableListOf<Jugador>()
 
         if (bombo is IBomboPideBolas) {
-            val numCartones = Utilidades.preguntarCartones(consola)
+            //Pedir num cartones
 
-            listaJugadores.add(Jugador("GladOS", numCartones))
+            listaJugadores.add(Jugador("GladOS", 2))
 
             for (i in 1..cantidadJugadores) {
                 println("Introduce el nombre del jugador ${i + 1}: ")
-                listaJugadores.add(Jugador(readln(), numCartones))
+                listaJugadores.add(Jugador(readln(), 2))
             }
         }
         else {
             listaJugadores.add(Jugador(NOMBRE_JUGADOR_RED, 2))
         }
 
-        return listaJugadores.toTypedArray()
+
+        return listaJugadores
     }
 
+    fun jugar() {
 
-    fun mostrarJugadores() {
-        for (jugador in jugadores) {
-            println(jugador.toString())
+        while (!finJuego){
+
+            val listaNumeros = bombo.sacarBolas()
+
+            for (num in listaNumeros) {
+
+                //TODO : comprobarNumero()
+
+
+            }
+
+
+
+
+
         }
+
     }
-
-
-    fun iniciarPartida() {
-        // TODO: Implementar lógica para iniciar la partida
-        bombo.sacarBolas()
-        mostrarJugadores()
-        }
-
 }
