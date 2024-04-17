@@ -1,4 +1,4 @@
-class Jugador(val nombre: String):IJugador {
+class Jugador(val nombre: String, numCartones: Int):IJugador {
     var listaCartones: MutableList<Carton> = mutableListOf()
     val id: Int = generarIdUnica()
 
