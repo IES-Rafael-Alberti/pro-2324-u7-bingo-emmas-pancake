@@ -1,23 +1,6 @@
 class Carton {
-    // TODO: REVISAR
-    /*
-        val numeros = arrayOf(
-                arrayOf(null, null, null, null, null, null, null, null, null),
-                arrayOf(null, null, null, null, null, null, null, null, null),
-                arrayOf(null, null, null, null, null, null, null, null, null)
-        )
-        Triple(1, 1, 3),
-            Triple(1, 2, 2),
-            Triple(1, 3, 1),
-            Triple(2, 1, 2),
-            Triple(2, 2, 1),
-            Triple(3, 1, 1)
-    */
     init {
         val posiciones = listaAleatoria()
-        println(posiciones[0])
-        println(posiciones[1])
-        println(posiciones[2])
     }
 
     companion object {
@@ -45,7 +28,7 @@ class Carton {
             mutableListOf(null, null, null, null, null, null, null, null, null)
         )
         obtenercombinacion()
-        val lista = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
+        val lista = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8).shuffled()
         var contador = 0
         for (i in lista) {
             if (contador < 2) {
@@ -58,7 +41,23 @@ class Carton {
                 }
             }
             contador++
+
         }
+        for (numeross in numeros){
+            for (numero in numeross ){
+                if (numero ==null){
+                    print("   ")
+                }else {
+                    print(" $numero ")
+                }
+
+            }
+            println()
+
+        }
+        println(numeros[0].filterNotNull().count())
+        println(numeros[1].filterNotNull().count())
+        println(numeros[2].filterNotNull().count())
         return numeros
     }
 
@@ -73,14 +72,13 @@ class Carton {
     }
 
     private fun colocar2numeros(numeros: List<List<Int?>>, posicion: Int): MutableList<List<Int?>> {
-
         val numero = numeros.toMutableList()
         if (primerNumero != 0) {
             primerNumero -= 1
-            for (j in 0..1) {
-                val lista = numero[j].toMutableList()
+            for (i in 0..1) {
+                val lista = numero[i].toMutableList()
                 lista[posicion] = 1
-                numero[j] = lista
+                numero[i] = lista
             }
         } else {
             if (segundoNumero != 0) {
@@ -108,21 +106,21 @@ class Carton {
     private fun colocar1numeros(numeros: List<List<Int?>>, posicion: Int): MutableList<List<Int?>> {
 
         val numero = numeros.toMutableList()
-        val fila0 = numero[0].count()
-        val fila1 = numero[1].count()
-        val fila2 = numero[2].count()
+        val fila0 = numero[0].filterNotNull().count()
+        val fila1 = numero[1].filterNotNull().count()
+        val fila2 = numero[2].filterNotNull().count()
         val lista: MutableList<Int?>
-        if (fila0 != 6){
+        if (fila0 != 6 && fila0 < 6){
             lista = numeros[0].toMutableList()
             lista[posicion] = 1
             numero[0] = lista
         }else{
-            if (fila1 != 6){
+            if (fila1 != 6 && fila1 < 6){
                 lista = numeros[1].toMutableList()
                 lista[posicion] = 1
                 numero[1] = lista
             }else{
-                if (fila2 != 6){
+                if (fila2 != 6 && fila2 < 6){
                     lista = numeros[2].toMutableList()
                     lista[posicion] = 1
                     numero[2] = lista
