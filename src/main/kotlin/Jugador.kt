@@ -17,6 +17,11 @@ class Jugador(val nombre: String):IJugador {
             carton.comprobarNumero(numero)
         }
     }
+
+
+    override fun toString(): String {
+        return "Jugador $id - $nombre\n $listaCartones"
+    }
 }
 
 interface IJugador {
