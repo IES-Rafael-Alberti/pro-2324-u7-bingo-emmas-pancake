@@ -30,4 +30,7 @@ class BomboLocal(private val gestorConsola: GestorConsola) : Bombo {
         return bolasSacadas
     }
 
+
+
+
 }
