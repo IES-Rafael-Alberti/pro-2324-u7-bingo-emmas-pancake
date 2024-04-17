@@ -230,15 +230,15 @@ class Carton {
 
     fun comprobarLinea(): Boolean {
         for (lineas in casillas){
-            var contadorLinea = 0
+            var contadorNumerosSalidos = 0
             for (numero in lineas){
                 if (numero != null){
                     if(numero.numeroSalido){
-                        contadorLinea++
+                        contadorNumerosSalidos++
                     }
                 }
             }
-            if (contadorLinea == 6){
+            if (contadorNumerosSalidos == 6){
                 return true
             }
         }
@@ -247,16 +247,16 @@ class Carton {
     }
 
     fun comprobarA3Numeros(): Boolean {
-        var contadorLinea = 0
+        var contadorNumerosSalidos = 0
         for (lineas in casillas){
             for (numero in lineas){
                 if (numero != null){
                     if(numero.numeroSalido){
-                        contadorLinea++
+                        contadorNumerosSalidos++
                     }
                 }
             }
-            if (contadorLinea >= 15){
+            if (contadorNumerosSalidos >= 15){
                 return true
             }
         }
@@ -265,16 +265,16 @@ class Carton {
     }
 
     fun comprobarBingo(): Boolean {
-        var contadorLinea = 0
+        var contadorNumerosSalidos = 0
         for (lineas in casillas){
             for (numero in lineas){
                 if (numero != null){
                     if(numero.numeroSalido){
-                        contadorLinea++
+                        contadorNumerosSalidos++
                     }
                 }
             }
-            if (contadorLinea == 18){
+            if (contadorNumerosSalidos == 18){
                 return true
             }
         }
