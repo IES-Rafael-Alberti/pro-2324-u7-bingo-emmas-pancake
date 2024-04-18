@@ -26,7 +26,9 @@ val logBingo = Utilidades.generarFicheroLogBingo()
 class Carton {
 
     private val casillas: Array<Array<Casilla?>> = Array(FILAS) { Array(COLUMNAS) { null } }
-
+    var linea = false
+    var a3Numeros = false
+    var bingo = false
     init {
         //esta es la variable que tendra todos lo numeros
         listaAleatoria()
@@ -241,6 +243,7 @@ class Carton {
             }
             if (contadorNumerosSalidos == 6){
                 println("$nombre LINEAAA")
+                linea= true
                 return true
             }
         }
@@ -260,6 +263,7 @@ class Carton {
             }
             if (contadorNumerosSalidos >= 15){
                 println("$nombre A 3 NUMEROS")
+                a3Numeros = true
                 return true
             }
         }
@@ -279,6 +283,7 @@ class Carton {
             }
             if (contadorNumerosSalidos == 18){
                 println("$nombre BINGO")
+                bingo=true
                 readln()
                 return true
             }
