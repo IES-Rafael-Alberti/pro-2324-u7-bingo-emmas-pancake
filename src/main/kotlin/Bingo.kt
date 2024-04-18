@@ -40,6 +40,10 @@ class Bingo(
     }
 
 
+    /** Cambia la cantidad de bolas que se sacan de la pila según lo que haya ocurrido en la partida
+     *
+     * @param jugador Se usa un jugador para ver si ha hecho linea o está a 3 bolas de acabar
+     */
     private fun cambiarGeneracionBolas(jugador: Jugador) {
         if (bombo is IBomboPideBolas) {
 
@@ -57,6 +61,8 @@ class Bingo(
     }
 
 
+    /** Ejecuta una partida de bingo hasta que un jugador complete uno de sus cartones
+     */
     fun jugar() {
         val generador = GeneradorVisualCartonInterno()
         while (!finJuego){
@@ -67,7 +73,7 @@ class Bingo(
 
                 for (jugador in jugadores) {
                     jugador.marcarNumero(num)
-                    println("${jugador.nombre}")
+                    println(jugador.nombre)
                     for (carton in jugador.listaCartones) {
                         print(generador.retornarCartonVisual(carton.casillas))
                     }
