@@ -34,4 +34,5 @@ fun main(args: Array<String>) {
     }else{
         gestorConsola.imprimir("Error - No se pudo generar log Bingo")
     }
+
 }
