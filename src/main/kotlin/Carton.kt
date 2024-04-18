@@ -39,6 +39,7 @@ class Carton {
         const val COLUMNAS = 9
         const val NUMEROS_COLUMNAS = 6
         const val ANCHURA = 46
+        var contador = 0
         /**
          * Estas son la combinaciones posibles que puede haber en el carton
          * son permutaciones, en este caso tenemos 27 numero y tomamos 18 numeros
@@ -284,7 +285,6 @@ class Carton {
             if (contadorNumerosSalidos == 18){
                 println("$nombre BINGO")
                 bingo=true
-                readln()
                 return true
             }
         }
