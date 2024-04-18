@@ -258,7 +258,7 @@ class Carton {
                     }
                 }
             }
-            if (contadorNumerosSalidos <= 15){
+            if (contadorNumerosSalidos >= 15){
                 println("$nombre A 3 NUMEROS")
                 return true
             }

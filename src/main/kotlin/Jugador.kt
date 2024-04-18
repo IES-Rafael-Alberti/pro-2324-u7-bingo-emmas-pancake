@@ -42,8 +42,7 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
 
     fun agregarCartones(num:Int) {
         for (i in 0..num){
-            val carton = Carton()
-            listaCartones.add(carton)
+            listaCartones.add(Carton())
         }
     }
 
