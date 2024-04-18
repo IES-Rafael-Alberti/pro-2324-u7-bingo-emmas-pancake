@@ -72,7 +72,7 @@ class Bingo(
                     }
 
                     if (jugador.bingo) {
-                        finJuego
+                        finJuego = true
                     }
 
                 }
