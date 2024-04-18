@@ -3,7 +3,7 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
     var listaCartones: MutableList<Carton> = mutableListOf()
     val id: Int = generarIdUnica()
     var linea:Boolean = false
-    var a3Numeros:Boolean = false
+    var a1Numero:Boolean = false
     var bingo:Boolean = false
 
     init{
@@ -27,9 +27,9 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
                         linea = true
                     }
                 }
-                if (!a3Numeros || !carton.a3Numeros){
+                if (!a1Numero || !carton.a1Numero){
                     if (carton.comprobarA3Numeros(nombre)){
-                        a3Numeros = true
+                        a1Numero = true
                     }
                 }
                 if (!bingo || !carton.bingo){

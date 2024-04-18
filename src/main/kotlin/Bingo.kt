@@ -52,8 +52,8 @@ class Bingo(
                 lineaCantada = true
             }
 
-            if (jugador.a3Numeros && !bingoCercaCantado) {
-                bombo.setNumbolas(NumBolas.A3NUMEROS)
+            if (jugador.a1Numero && !bingoCercaCantado) {
+                bombo.setNumbolas(NumBolas.A1NUMERO)
                 bingoCercaCantado = true
             }
         }

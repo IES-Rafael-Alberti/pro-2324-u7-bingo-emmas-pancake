@@ -27,7 +27,7 @@ class Carton {
 
     val casillas: Array<Array<Casilla?>> = Array(FILAS) { Array(COLUMNAS) { null } }
     var linea = false
-    var a3Numeros = false
+    var a1Numero = false
     var bingo = false
     init {
         //esta es la variable que tendra todos lo numeros
@@ -262,9 +262,9 @@ class Carton {
                     }
                 }
             }
-            if (contadorNumerosSalidos >= 15){
+            if (contadorNumerosSalidos >= 17){
                 println("$nombre A 3 NUMEROS")
-                a3Numeros = true
+                a1Numero = true
                 return true
             }
         }
