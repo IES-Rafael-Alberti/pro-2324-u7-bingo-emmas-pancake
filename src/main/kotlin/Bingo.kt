@@ -58,12 +58,18 @@ class Bingo(
 
 
     fun jugar() {
+        val generador = GeneradorVisualCartonInterno()
         while (!finJuego){
+
             val listaNumeros = bombo.sacarBolas()
             for (num in listaNumeros) {
 
                 for (jugador in jugadores) {
                     jugador.marcarNumero(num)
+                    for (carton in jugador.listaCartones) {
+                        println("${jugador.nombre}")
+                        println(generador.retornarCartonVisual(carton.casillas))
+                    }
 
                     if (!lineaCantada) {
                         cambiarGeneracionBolas(jugador)

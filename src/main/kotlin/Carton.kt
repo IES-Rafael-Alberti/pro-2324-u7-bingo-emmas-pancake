@@ -25,7 +25,7 @@ val logBingo = Utilidades.generarFicheroLogBingo()
 
 class Carton {
 
-    private val casillas: Array<Array<Casilla?>> = Array(FILAS) { Array(COLUMNAS) { null } }
+    val casillas: Array<Array<Casilla?>> = Array(FILAS) { Array(COLUMNAS) { null } }
     var linea = false
     var a3Numeros = false
     var bingo = false
