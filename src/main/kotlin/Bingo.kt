@@ -9,7 +9,7 @@ class Bingo(
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
 
     companion object {
-        private const val NOMBRE_JUGADOR_RED = "LOS_EMMANUELES"
+        private const val NOMBRE_JUGADOR_RED = "EMMANUEL_MVP"
     }
 
 
@@ -62,13 +62,14 @@ class Bingo(
         while (!finJuego){
 
             val listaNumeros = bombo.sacarBolas()
+            println("$listaNumeros")
             for (num in listaNumeros) {
 
                 for (jugador in jugadores) {
                     jugador.marcarNumero(num)
+                    println("${jugador.nombre}")
                     for (carton in jugador.listaCartones) {
-                        println("${jugador.nombre}")
-                        println(generador.retornarCartonVisual(carton.casillas))
+                        print(generador.retornarCartonVisual(carton.casillas))
                     }
 
                     if (!lineaCantada) {
