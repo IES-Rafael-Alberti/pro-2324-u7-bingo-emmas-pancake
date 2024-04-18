@@ -1,3 +1,25 @@
+/**
+ * Saca las bolas de un fichero. Sacar bolas igual que en local, misma funcion
+ * Pasarle ruta del fichero xxxx a Bombocentral(xxxx). Enconctrar el ultimo modificado txt  -> bomboCentral_yyy_mm_dd.txt
+ *
+ * Bingocentral genera el fichero bomboCentral_yyy_mm_dd  y bombocentralUsuario yyy mm dd --> estos estaran en \\PcProfe\Bingo
+ * Bingo central empieza. Kotlin mainkt -b \\PcProfe\Bingo. Comprueba que es en red y no comprueba nada, solo busca los dos ficheros, usando bomboRed/bombocentral.
+ * EN bombo ccentral, crear Ibombored con IGetficherobombo -> leer  y  IgetFicheroUSUARIO -> escribir
+ *
+ *
+ * Bombocentral yyyy mm dd.txt EN red -->:
+ * usar list.size para leer los numeros
+ * quedarse en bucle leyendo
+ * coger con readline todas las lineas del fichero, y usar lista.last para coger la ultima liniea de todo el fichero
+ * una vez leido, nuestro jugar() hace lo mismo que en local, comprueba linea etc
+ *
+ * Comprobar si la variable coincide con el num de lineas del txt
+ * En red: 1j y 2 cartone
+ * Leer en un fichero los numeros, y escribir en el otro de users cada ronda
+ *
+  */
+
+
 class BomboCentral() : IBombo {
 
     override fun sacarBolas(): List<Int> {
