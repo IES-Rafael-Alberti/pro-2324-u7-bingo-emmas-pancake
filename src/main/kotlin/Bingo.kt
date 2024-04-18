@@ -7,8 +7,6 @@ class Bingo(
     private val fichero: File
 ) {
     private var finJuego = false
-    private var lineaCantada = false
-    private var bingoCercaCantado = false
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
 
     companion object {
