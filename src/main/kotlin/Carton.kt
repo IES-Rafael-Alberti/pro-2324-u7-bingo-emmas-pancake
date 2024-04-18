@@ -243,7 +243,6 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos == 6){
-                println("$nombre LINEAAA")
                 linea= true
                 return true
             }
@@ -263,7 +262,6 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos >= 17){
-                println("$nombre A 3 NUMEROS")
                 a1Numero = true
                 return true
             }
@@ -283,7 +281,6 @@ class Carton {
                 }
             }
             if (contadorNumerosSalidos == 18){
-                println("$nombre BINGO")
                 bingo=true
                 return true
             }
