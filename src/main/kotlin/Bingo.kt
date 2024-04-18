@@ -43,24 +43,21 @@ class Bingo(
     }
 
 
-    /** Cambia la cantidad de bolas que se sacan de la pila según lo que haya ocurrido en la partida
-     *
-     * @param jugador Se usa un jugador para ver si ha hecho linea o está a 3 bolas de acabar
+    /** Cambia la cantidad de bolas que se sacan de la pila a 3 bolas
      */
-    private fun cambiarGeneracionBolas(jugador: Jugador) {
+    private fun cambiarGeneracionBolasA3() {
         if (bombo is IBomboPideBolas) {
-
-            if (jugador.linea && !lineaCantada) {
-                bombo.setNumbolas(NumBolas.LINEA)
-                lineaCantada = true
-            }
-
-            if (jugador.a1Numero && !bingoCercaCantado) {
-                bombo.setNumbolas(NumBolas.A1NUMERO)
-                bingoCercaCantado = true
-            }
+            bombo.setNumbolas((NumBolas.LINEA))
         }
+    }
 
+
+    /** Cambia la cantidad de bolas que se sacan de la pila a 1 bola
+     */
+    private fun cambiarGeneracionBolasA1() {
+        if (bombo is IBomboPideBolas) {
+            bombo.setNumbolas((NumBolas.A1NUMERO))
+        }
     }
 
 
@@ -68,37 +65,42 @@ class Bingo(
      */
     fun jugar() {
         val generador = GeneradorVisualCartonInterno()
+        var ganador: String? = null
+        var primeraLinea = false
+        var primeraFinal = false
+
         while (!finJuego){
 
             val listaNumeros = bombo.sacarBolas()
-            println("$listaNumeros")
             for (num in listaNumeros) {
-
                 for (jugador in jugadores) {
                     jugador.marcarNumero(num)
-                    println(jugador.nombre)
+                    consola.imprimir(jugador.nombre)
                     for (carton in jugador.listaCartones) {
-                        print(generador.retornarCartonVisual(carton.casillas))
+                        consola.imprimir(generador.retornarCartonVisual(carton.casillas))
                     }
 
-                    if (!lineaCantada) {
-                        cambiarGeneracionBolas(jugador)
+                    if (!primeraLinea && jugador.linea) {
+                        cambiarGeneracionBolasA3()
                         gestorFichero.escribir(fichero, "${jugador.nombre} ha hecho línea\n")
-                    } else if (!bingoCercaCantado) {
-                        cambiarGeneracionBolas(jugador)
+                        primeraLinea = true
+                    }
+
+                    if (!primeraFinal && jugador.a1Numero) {
+                        cambiarGeneracionBolasA1()
                         gestorFichero.escribir(fichero, "${jugador.nombre} a 1 bola\n")
+                        primeraFinal = true
                     }
 
                     if (jugador.bingo) {
-                        gestorFichero.escribir(fichero, "${jugador.nombre} ha ganado!\n")
                         finJuego = true
+                        ganador = jugador.nombre
                     }
-
                 }
-
             }
-
         }
+        gestorFichero.escribir(fichero, "$ganador ha ganado!\n")
+
     }
 
 }
