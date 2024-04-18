@@ -1,7 +1,10 @@
+import java.io.File
+
 class Bingo(
     private val consola: IConsola,
     private val bombo: IBombo,
-    private val gestorFichero: IFicheros
+    private val gestorFichero: IFicheros,
+    private val fichero: File
 ) {
     private var finJuego = false
     private var lineaCantada = false
@@ -9,7 +12,7 @@ class Bingo(
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
 
     companion object {
-        private const val NOMBRE_JUGADOR_RED = "EMMANUEL_MVP"
+        private const val NOMBRE_JUGADOR_RED = "EMMANUEL_ZZZ"
     }
 
 
@@ -50,11 +53,13 @@ class Bingo(
             if (jugador.linea && !lineaCantada) {
                 bombo.setNumbolas(NumBolas.LINEA)
                 lineaCantada = true
+                gestorFichero.escribir(fichero, "${jugador} ha hecho línea")
             }
 
             if (jugador.a1Numero && !bingoCercaCantado) {
                 bombo.setNumbolas(NumBolas.A1NUMERO)
                 bingoCercaCantado = true
+                gestorFichero.escribir(fichero, "${jugador} a 1 bola")
             }
         }
 
