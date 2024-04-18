@@ -45,10 +45,6 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
             listaCartones.add(Carton())
         }
     }
-
-    override fun toString(): String {
-        return "Jugador $id - $nombre\n $listaCartones"
-    }
 }
 
 interface IJugador {

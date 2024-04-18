@@ -8,7 +8,7 @@ fun main(args: Array<String>) {
 
     val bombo =
         if (rutaBingoCentral != null) {
-            BomboCentral()
+            BomboCentral(rutaBingoCentral,gestorFicheros)
         } else {
             BomboLocal(gestorConsola)
         }

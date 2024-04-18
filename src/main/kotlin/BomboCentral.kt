@@ -1,3 +1,5 @@
+import java.io.File
+
 /**
  * Saca las bolas de un fichero. Sacar bolas igual que en local, misma funcion
  * Pasarle ruta del fichero xxxx a Bombocentral(xxxx). Enconctrar el ultimo modificado txt  -> bomboCentral_yyy_mm_dd.txt
@@ -20,10 +22,24 @@
   */
 
 
-class BomboCentral() : IBombo {
+class BomboCentral(val rutaBingoCentral: String,val gestorFicheros: IFicheros) : IBombo {
 
+    private var numRondas = 1
     override fun sacarBolas(): List<Int> {
-        return emptyList()
-        //TODO: Hacerlo para red
+        var contador = 0
+        var numeros = mutableListOf<Int>()
+        val fichero = File(rutaBingoCentral)
+        do{
+            val lineas = gestorFicheros.leer(fichero)
+            if (lineas!= null && numRondas == lineas.size){
+                val lista = lineas.last().split(" ").map { it.toIntOrNull() }.forEach {numeroAAñadir->
+                    if (numeroAAñadir !=null) numeros.add(numeroAAñadir)
+                }
+            }
+
+            Thread.sleep(500)
+            contador++
+        }while (numeros.size <= 0 && contador < 300)
+        return numeros
     }
 }
