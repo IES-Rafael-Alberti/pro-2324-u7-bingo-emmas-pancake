@@ -53,13 +53,11 @@ class Bingo(
             if (jugador.linea && !lineaCantada) {
                 bombo.setNumbolas(NumBolas.LINEA)
                 lineaCantada = true
-                gestorFichero.escribir(fichero, "${jugador.nombre} ha hecho línea\n")
             }
 
             if (jugador.a1Numero && !bingoCercaCantado) {
                 bombo.setNumbolas(NumBolas.A1NUMERO)
                 bingoCercaCantado = true
-                gestorFichero.escribir(fichero, "${jugador.nombre} a 1 bola\n")
             }
         }
 
@@ -85,8 +83,10 @@ class Bingo(
 
                     if (!lineaCantada) {
                         cambiarGeneracionBolas(jugador)
+                        gestorFichero.escribir(fichero, "${jugador.nombre} ha hecho línea\n")
                     } else if (!bingoCercaCantado) {
                         cambiarGeneracionBolas(jugador)
+                        gestorFichero.escribir(fichero, "${jugador.nombre} a 1 bola\n")
                     }
 
                     if (jugador.bingo) {
