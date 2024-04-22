@@ -68,14 +68,6 @@ class Bingo(
     }
 
 
-    fun mostrarAciertos(ronda: Int, num: Int, jugador: Jugador, carton: Carton, numCarton: Int) {
-        if (offline) {
-            consola.imprimir("$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton + " +
-                    "(${carton.coordenadasAciertos(num)?.joinToString(" ")})")
-        }
-    }
-
-
     /** Ejecuta una partida de bingo hasta que un jugador complete uno de sus cartones
      */
     fun jugar() {

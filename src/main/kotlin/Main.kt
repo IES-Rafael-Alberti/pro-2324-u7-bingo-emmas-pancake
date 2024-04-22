@@ -1,3 +1,5 @@
+import java.io.File
+
 fun main(args: Array<String>) {
     val gestorConsola = GestorConsola()
 
@@ -20,7 +22,12 @@ fun main(args: Array<String>) {
             GeneradorVisualCartonInterno()
         }
 
-    val logBingo = gestorFicheros.crearFic(Utilidades.generarFicheroLogBingo(),Utilidades.getCabeceraLogoBingo())
+    val logBingo =
+        if (rutaBingoCentral != null) {
+            gestorFicheros.crearFic(rutaBingoCentral)
+        } else {
+            gestorFicheros.crearFic(Utilidades.generarFicheroLogBingo(),Utilidades.getCabeceraLogoBingo())
+        }
 
     if (logBingo != null){
         val bingo = Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)

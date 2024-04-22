@@ -126,17 +126,6 @@ class Utilidades {
             readln()
         }
 
-
-        /** Comprueba si el juego es offline
-         *
-         * @param bombo el bombo que usamos en la partida
-         *
-         * @return true si es offline, false si es online
-         */
-        fun esOffline(bombo: IBombo): Boolean {
-            return (bombo is IBomboPideBolas)
-        }
-
     }
 
 }
