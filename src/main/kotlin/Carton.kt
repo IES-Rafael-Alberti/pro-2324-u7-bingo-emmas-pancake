@@ -290,38 +290,20 @@ class Carton {
 
     }
 
-//    override fun toString(): String {
-//        var serie = ""
-//        for (filas in casillas) {
-//            serie += "|"
-//            for (numeros in filas) {
-//                if (numeros == null) {
-//                    serie += "    |"
-//                } else {
-//                    if (numeros.numero < 10) {
-//                        serie += " 0${numeros.numero} |"
-//                    } else {
-//                        serie += " ${numeros.numero} |"
-//                    }
-//
-//                }
-//            }
-//            serie += "\n|"
-//            for (numeros in filas) {
-//                if (numeros == null) {
-//                    serie += "    |"
-//                } else {
-//                    if (numeros.numeroSalido) {
-//                        serie += " XX |"
-//                    } else {
-//                        serie += "    |"
-//                    }
-//
-//                }
-//            }
-//            serie += "\n"
-//        }
-//        return serie
-//    }
-
+    fun coordenadasAciertos(num:Int): List<Int>? {
+        var fila = 1
+        for (filas in casillas){
+            var posicion =1
+            for (numeros in filas){
+                if (numeros != null) {
+                    if (numeros.numero == num){
+                        return listOf(fila,posicion)
+                    }
+                }
+                posicion++
+            }
+            fila++
+        }
+        return null
+    }
 }

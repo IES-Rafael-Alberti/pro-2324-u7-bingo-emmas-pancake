@@ -22,9 +22,9 @@ import java.io.File
   */
 
 
-class BomboCentral(val rutaBingoCentral: String,val gestorFicheros: IFicheros) : IBombo {
+class BomboCentral(private val rutaBingoCentral: String, private val gestorFicheros: IFicheros) : IBombo {
 
-    private var numRondas = 1
+    var numRondas = 1
     override fun sacarBolas(): List<Int> {
         var contador = 0
         var numeros = mutableListOf<Int>()
