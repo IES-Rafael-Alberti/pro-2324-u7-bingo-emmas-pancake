@@ -29,6 +29,7 @@ class Carton {
     var linea = false
     var a1Numero = false
     var bingo = false
+    var aciertos = 0
     init {
         //esta es la variable que tendra todos lo numeros
         listaAleatoria()
@@ -225,13 +226,14 @@ class Carton {
                 if (numero != null) {
                     if (numero.numero == num){
                         numero.numeroSalido=true
+                        aciertos++
                     }
                 }
             }
         }
     }
 
-    fun comprobarLinea(nombre:String): Boolean {
+    fun comprobarLinea(): Boolean {
         for (lineas in casillas){
             var contadorNumerosSalidos = 0
             for (numero in lineas){
@@ -250,7 +252,7 @@ class Carton {
 
     }
 
-    fun comprobarA3Numeros(nombre:String): Boolean {
+    fun comprobarA3Numeros(): Boolean {
         var contadorNumerosSalidos = 0
         for (lineas in casillas){
             for (numero in lineas){
@@ -269,7 +271,7 @@ class Carton {
 
     }
 
-    fun comprobarBingo(nombre:String): Boolean {
+    fun comprobarBingo(): Boolean {
         var contadorNumerosSalidos = 0
         for (lineas in casillas){
             for (numero in lineas){
