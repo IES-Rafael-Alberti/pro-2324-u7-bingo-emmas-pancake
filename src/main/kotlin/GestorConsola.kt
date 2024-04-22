@@ -34,8 +34,8 @@ class GestorConsola: IConsola {
     }
 
 
-    override fun limipiar(nLines: Int) {
-        imprimir("".repeat(nLines))
+    override fun limpiar(nLines: Int) {
+        repeat(nLines){imprimir("",true)}
 
     }
 }
