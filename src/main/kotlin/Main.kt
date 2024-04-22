@@ -1,4 +1,5 @@
 import java.io.File
+import kotlin.math.log
 
 fun main(args: Array<String>) {
     val gestorConsola = GestorConsola()
@@ -30,13 +31,21 @@ fun main(args: Array<String>) {
         }
 
     if (logBingo != null){
-        val bingo = Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)
-        try {
-            bingo.jugar()
+        val txt = logBingo.listFiles { _, nombre -> nombre.endsWith(".txt") }?.maxByOrNull { it.lastModified() }
+
+        if (txt != null){
+            val bingo = Bingo(gestorConsola, bombo, gestorFicheros, txt, genVisualCarton)
+            try {
+                bingo.jugar()
+            }
+            catch (e: Exception) {
+                gestorConsola.imprimir("Error ${e.message}")
+            }
+        }else{
+            gestorConsola.imprimir("Error - No se encontro ningun archivo de texto ")
         }
-        catch (e: Exception) {
-            gestorConsola.imprimir("Error ${e.message}")
-        }
+
+
 
     }else{
         gestorConsola.imprimir("Error - No se pudo generar log Bingo")
