@@ -33,22 +33,25 @@ fun main(args: Array<String>) {
     if (logBingo != null){
         val txt = logBingo.listFiles { _, nombre -> nombre.endsWith(".txt") }?.maxByOrNull { it.lastModified() }
 
-        if (txt != null){
-            val bingo = Bingo(gestorConsola, bombo, gestorFicheros, txt, genVisualCarton)
-            try {
-                bingo.jugar()
-            }
-            catch (e: Exception) {
-                gestorConsola.imprimir("Error ${e.message}")
+        val bingo = if (bombo is BomboCentral){
+            if (txt != null) {
+                Bingo(gestorConsola, bombo, gestorFicheros, txt, genVisualCarton)
+            }else{
+                Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)
             }
         }else{
-            gestorConsola.imprimir("Error - No se encontro ningun archivo de texto ")
+            Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)
         }
 
-
-
+        try {
+            bingo.jugar()
+        }
+        catch (e: Exception) {
+            gestorConsola.imprimir("Error ${e.message}")
+        }
     }else{
-        gestorConsola.imprimir("Error - No se pudo generar log Bingo")
+        gestorConsola.imprimir("Error - No se encontro ningun archivo de texto ")
     }
+
 
 }
