@@ -24,7 +24,7 @@ fun main(args: Array<String>) {
 
     val logBingo =
         if (rutaBingoCentral != null) {
-            gestorFicheros.crearFic(rutaBingoCentral)
+            File(rutaBingoCentral)
         } else {
             gestorFicheros.crearFic(Utilidades.generarFicheroLogBingo(),Utilidades.getCabeceraLogoBingo())
         }
