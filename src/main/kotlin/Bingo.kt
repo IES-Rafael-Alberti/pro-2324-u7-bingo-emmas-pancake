@@ -73,11 +73,14 @@ class Bingo(
             val listaNumeros = bombo.sacarBolas()
             for (num in listaNumeros) {
                 rondas++
-                consola.imprimir(" -*- Ronda $rondas -*- ")
+                consola.imprimir("-*- Ronda $rondas -*- ")
                 for (jugador in jugadores) {
+                    var cont = 1
                     jugador.marcarNumero(num)
-                    consola.imprimir(jugador.nombre)
+
                     for (carton in jugador.listaCartones) {
+                        consola.imprimir("CARTON ${jugador.nombre} - $cont (${carton.aciertos} de 18)")
+                        cont++
                         consola.imprimir(generador.retornarCartonVisual(carton.casillas))
                     }
 

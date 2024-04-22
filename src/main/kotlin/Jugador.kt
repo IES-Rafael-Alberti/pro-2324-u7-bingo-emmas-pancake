@@ -23,17 +23,17 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
             listaCartones.forEach { carton ->
                 carton.comprobarNumero(numero)
                 if (!linea || !carton.linea){
-                    if (carton.comprobarLinea(nombre)){
+                    if (carton.comprobarLinea()){
                         linea = true
                     }
                 }
                 if (!a1Numero || !carton.a1Numero){
-                    if (carton.comprobarA3Numeros(nombre)){
+                    if (carton.comprobarA3Numeros()){
                         a1Numero = true
                     }
                 }
                 if (!bingo || !carton.bingo){
-                    if (carton.comprobarBingo(nombre)){
+                    if (carton.comprobarBingo()){
                         bingo = true
                     }
                 }

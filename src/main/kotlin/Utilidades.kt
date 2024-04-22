@@ -120,7 +120,7 @@ class Utilidades {
         /** Pausa el programa hasta que el usuario pulse enter
          */
         fun pausar(consola: IConsola) {
-            consola.imprimir("pulsa ENTER para continuar...")
+            consola.imprimir("Pulsa ENTER para continuar...")
             readln()
         }
 
