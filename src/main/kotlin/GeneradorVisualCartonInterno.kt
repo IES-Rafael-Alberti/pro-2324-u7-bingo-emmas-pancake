@@ -33,6 +33,7 @@ class GeneradorVisualCartonInterno() : IGeneradorVisualCarton {
 
             resultado += "\n"
             resultado += linea
+            resultado += "\n"
         }
 
         return resultado

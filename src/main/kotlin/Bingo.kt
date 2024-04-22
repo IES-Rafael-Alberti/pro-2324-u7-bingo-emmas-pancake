@@ -9,6 +9,7 @@ class Bingo(
 ) {
     private var finJuego = false
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
+    private val offline = (bombo is IBomboPideBolas)
 
     companion object {
         private const val NOMBRE_JUGADOR_RED = "EMMANUEL_ZZZ"
@@ -27,7 +28,7 @@ class Bingo(
         if (bombo is IBomboPideBolas) {
             val numCartones = Utilidades.preguntarCartones(consola)
 
-            listaJugadores.add(Jugador("CPU", numCartones))
+            listaJugadores.add(Jugador("GladOS", numCartones))
 
             for (i in 1..cantidadJugadores) {
                 println("Introduce el nombre del jugador ${i + 1}: ")
@@ -83,38 +84,48 @@ class Bingo(
             val listaNumeros = bombo.sacarBolas()
             ronda = bombo.numRondas
 
-            consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString("")}\n")
-            if (bombo is IBomboPideBolas) {
+            consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
+            if (offline) {
                 gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
             }
 
+            var mensaje = ""
+            var cartones = ""
             for (num in listaNumeros) {
 
                 for (jugador in jugadores) {
                     var numCarton = 1
                     jugador.marcarNumero(num)
-
                     for (carton in jugador.listaCartones) {
-                        consola.imprimir("         " +
+                        cartones +="         " +
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
-                                generador.retornarCartonVisual(carton.casillas))
+                                generador.retornarCartonVisual(carton.casillas)
 
-                        if (bombo is IBomboPideBolas && carton.contiene(num)) {
-                            consola.imprimir("$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton " +
-                                    "(${carton.coordenadasAciertos(num)?.joinToString(" ")})")
+                        if (offline && carton.contiene(num)) {
+                            mensaje+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
+                                    "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
                         }
 
                         numCarton++
                     }
+                    consola.imprimir(mensaje + cartones)
 
+                    var lista = mutableListOf<Int>()
                     for (carton in jugador.listaCartones) {
-                        if (bombo is IBomboPideBolas) {
+                        if (offline) {
                             gestorFichero.escribir(fichero, "         " +
                                     "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                     generador.retornarCartonVisual(carton.casillas))
+                        }else{
+                            lista.add(carton.aciertosPorRondas)
                         }
                     }
-
+                    if (!offline) {
+                        gestorFichero.escribir(
+                            fichero,
+                            "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas} - ${lista[0]} - ${lista[1]}"
+                        )
+                    }
                     if (!primeraLinea && jugador.linea) {
                         cambiarGeneracionBolasA3()
                         gestorFichero.escribir(fichero, "${jugador.nombre} ha hecho línea\n")

@@ -5,6 +5,7 @@ class Carton {
     var a1Numero = false
     var bingo = false
     var aciertos = 0
+    var aciertosPorRondas=0
     init {
         listaAleatoria()
     }
@@ -207,11 +208,13 @@ class Carton {
      *
      * */
     fun comprobarNumero(num: Int) {
+        aciertosPorRondas = 0
         for (casilla in casillas) {
             for (numero in casilla){
                 if (numero != null) {
                     if (numero.numero == num){
                         numero.numeroSalido=true
+                        aciertosPorRondas++
                         aciertos++
                     }
                 }
