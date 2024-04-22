@@ -24,13 +24,13 @@ fun main(args: Array<String>) {
 
     val logBingo =
         if (rutaBingoCentral != null) {
-            File(rutaBingoCentral)
+            File(rutaBingoCentral).lastModified()
         } else {
             gestorFicheros.crearFic(Utilidades.generarFicheroLogBingo(),Utilidades.getCabeceraLogoBingo())
         }
 
     if (logBingo != null){
-        val bingo = Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)
+        val bingo = Bingo(gestorConsola, bombo, gestorFicheros, logBingo as File, genVisualCarton)
         try {
             bingo.jugar()
         }
