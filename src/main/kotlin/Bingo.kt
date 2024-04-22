@@ -95,8 +95,8 @@ class Bingo(
                         ganador = jugador.nombre
                     }
 
-                    Utilidades.pausar()
                 }
+                Utilidades.pausar(consola)
             }
         }
         gestorFichero.escribir(fichero, "$ganador ha ganado!\n")
