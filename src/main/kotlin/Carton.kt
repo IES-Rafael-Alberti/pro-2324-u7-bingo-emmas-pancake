@@ -1,28 +1,3 @@
-/**
-fun main(args: Array<String>) {
-val consola = Consola()
-val gestorFich = FicherosTxt()
-
-val (formato, rutaFichero, ficheroBingoCentral) = Utilidades.comprobarArgumentos(args, consola)
-
-val bombo =
-if (rutaFichero != null && ficheroBingoCentral != null) {
-BomboCentral(ficheroBingoCentral, gestorFich)
-} else {
-BomboLocal()
-}
-
-val genVisualCarton =
-if (formato == "kf") {
-GeneradorVisualCartonKFormat()
-} else {
-GeneradorVisualCartonInterno()
-}
-
-val logBingo = Utilidades.generarFicheroLogBingo()
-}
- * */
-
 class Carton {
 
     val casillas: Array<Array<Casilla?>> = Array(FILAS) { Array(COLUMNAS) { null } }
@@ -31,7 +6,6 @@ class Carton {
     var bingo = false
     var aciertos = 0
     init {
-        //esta es la variable que tendra todos lo numeros
         listaAleatoria()
     }
 
@@ -171,6 +145,9 @@ class Carton {
         return numeros
     }
 
+    /**
+     *
+     * */
     private fun colocar3numeros(posicion: Int) {
         val numero = obtenerNumeros(posicion, 3).sorted()
         for (i in 0..2) {
@@ -178,6 +155,9 @@ class Carton {
         }
     }
 
+    /**
+     *
+     * */
     private fun colocar2numeros(posicion: Int) {
         val numero = obtenerNumeros(posicion, 2).sorted()
         if (primerNumero != 0) {
@@ -201,6 +181,9 @@ class Carton {
         }
     }
 
+    /**
+     *
+     * */
     private fun colocar1numeros(posicion: Int) {
 
         val numero = obtenerNumeros(posicion, 1)
@@ -220,6 +203,9 @@ class Carton {
         }
     }
 
+    /**
+     *
+     * */
     fun comprobarNumero(num: Int) {
         for (casilla in casillas) {
             for (numero in casilla){
@@ -233,6 +219,9 @@ class Carton {
         }
     }
 
+    /**
+     *
+     * */
     fun comprobarLinea(): Boolean {
         for (lineas in casillas){
             var contadorNumerosSalidos = 0
@@ -252,6 +241,9 @@ class Carton {
 
     }
 
+    /**
+     *
+     * */
     fun comprobarA3Numeros(): Boolean {
         var contadorNumerosSalidos = 0
         for (lineas in casillas){
@@ -271,6 +263,9 @@ class Carton {
 
     }
 
+    /**
+     *
+     * */
     fun comprobarBingo(): Boolean {
         var contadorNumerosSalidos = 0
         for (lineas in casillas){
@@ -290,6 +285,9 @@ class Carton {
 
     }
 
+    /**
+     *
+     * */
     fun coordenadasAciertos(num:Int): List<Int>? {
         var fila = 1
         for (filas in casillas){
