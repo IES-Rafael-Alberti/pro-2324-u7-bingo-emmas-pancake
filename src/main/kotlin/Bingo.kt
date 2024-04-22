@@ -94,6 +94,8 @@ class Bingo(
                         finJuego = true
                         ganador = jugador.nombre
                     }
+
+                    Utilidades.pausar()
                 }
             }
         }
