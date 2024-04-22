@@ -4,7 +4,8 @@ class Bingo(
     private val consola: IConsola,
     private val bombo: IBombo,
     private val gestorFichero: IFicheros,
-    private val fichero: File
+    private val fichero: File,
+    private val genVisualCarton: IGeneradorVisualCarton
 ) {
     private var finJuego = false
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
@@ -60,9 +61,9 @@ class Bingo(
     }
 
 
-    private fun mostrarInicioPartida() {
+    private fun confirmarConexion() {
         for (jugador in jugadores) {
-
+            gestorFichero.escribir(fichero, "$jugador - ok")
         }
     }
 
@@ -76,6 +77,8 @@ class Bingo(
         var primeraFinal = false
         var ronda: Int
 
+        confirmarConexion()
+
         while (!finJuego){
 
             val listaNumeros = bombo.sacarBolas()
@@ -83,7 +86,7 @@ class Bingo(
 
             consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString("")}")
             if (offline) {
-                gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString("")}")
+                gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}")
             }
 
             for (num in listaNumeros) {
@@ -92,7 +95,7 @@ class Bingo(
                     jugador.marcarNumero(num)
 
                     for (carton in jugador.listaCartones) {
-                        consola.imprimir("          " +
+                        consola.imprimir("        " +
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                 generador.retornarCartonVisual(carton.casillas))
 

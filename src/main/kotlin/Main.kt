@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
     val logBingo = gestorFicheros.crearFic(Utilidades.generarFicheroLogBingo(),Utilidades.getCabeceraLogoBingo())
 
     if (logBingo != null){
-        val bingo = Bingo(gestorConsola, bombo, gestorFicheros, logBingo)
+        val bingo = Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)
         try {
             bingo.jugar()
         }
