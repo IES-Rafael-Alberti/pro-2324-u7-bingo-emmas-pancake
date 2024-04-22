@@ -32,14 +32,12 @@ class BomboCentral(val rutaBingoCentral: String,val gestorFicheros: IFicheros) :
         do{
             val lineas = gestorFicheros.leer(fichero)
             if (lineas!= null && numRondas == lineas.size){
-                val lista = lineas.last().split(" ").map { it.toIntOrNull() }.forEach {numeroAAñadir->
-                    if (numeroAAñadir !=null) numeros.add(numeroAAñadir)
-                }
+                lineas.last().split(" ").map { it.toIntOrNull() }.forEach {numeroAAnadir-> if (numeroAAnadir !=null) numeros.add(numeroAAnadir) }
             }
 
             Thread.sleep(500)
             contador++
-        }while (numeros.size <= 0 && contador < 300)
+        }while (numeros.size <= 0 && contador < 120)
         return numeros
     }
 }
