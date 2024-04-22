@@ -304,4 +304,20 @@ class Carton {
         }
         return null
     }
-}
+
+
+    fun contiene(num: Int): Boolean {
+        for (filas in casillas){
+            for (numero in filas){
+                if (numero != null) {
+                    if (numero.numero == num) {
+                        return true
+                    }
+                }
+                }
+            }
+        return false
+
+        }
+
+    }

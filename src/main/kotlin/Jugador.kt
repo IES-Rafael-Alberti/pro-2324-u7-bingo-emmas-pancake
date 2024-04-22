@@ -1,7 +1,7 @@
 class Jugador(val nombre: String, numCartones: Int):IJugador {
 
     var listaCartones: MutableList<Carton> = mutableListOf()
-    val id: Int = generarIdUnica()
+    val id: String = generarIdUnica()
     var linea:Boolean = false
     var a1Numero:Boolean = false
     var bingo:Boolean = false
@@ -11,11 +11,11 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
     }
 
     companion object {
-        private var contadorIds = 0
+        private var contadorIds = 1
 
-        fun generarIdUnica(): Int {
+        fun generarIdUnica(): String {
             contadorIds++
-            return contadorIds
+            return "J$contadorIds"
         }
     }
 

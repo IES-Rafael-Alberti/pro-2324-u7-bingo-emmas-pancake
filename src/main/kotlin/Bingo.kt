@@ -68,6 +68,14 @@ class Bingo(
     }
 
 
+    fun mostrarAciertos(ronda: Int, num: Int, jugador: Jugador, carton: Carton, numCarton: Int) {
+        if (offline) {
+            consola.imprimir("$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton + " +
+                    "(${carton.coordenadasAciertos(num)?.joinToString(" ")})")
+        }
+    }
+
+
     /** Ejecuta una partida de bingo hasta que un jugador complete uno de sus cartones
      */
     fun jugar() {
@@ -84,28 +92,36 @@ class Bingo(
             val listaNumeros = bombo.sacarBolas()
             ronda = bombo.numRondas
 
-            consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString("")}")
+            consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString("")}\n")
             if (offline) {
-                gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}")
+                gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
             }
 
             for (num in listaNumeros) {
+
                 for (jugador in jugadores) {
                     var numCarton = 1
                     jugador.marcarNumero(num)
 
                     for (carton in jugador.listaCartones) {
-                        consola.imprimir("        " +
+                        consola.imprimir("         " +
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                 generador.retornarCartonVisual(carton.casillas))
 
-                        if (offline) {
-                            gestorFichero.escribir(fichero, "          " +
-                                    "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
-                                    generador.retornarCartonVisual(carton.casillas))
+                        if (offline && carton.contiene(num)) {
+                            consola.imprimir("$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton + " +
+                                    "(${carton.coordenadasAciertos(num)?.joinToString(" ")})")
                         }
 
                         numCarton++
+                    }
+
+                    for (carton in jugador.listaCartones) {
+                        if (offline) {
+                            gestorFichero.escribir(fichero, "         " +
+                                    "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
+                                    generador.retornarCartonVisual(carton.casillas))
+                        }
                     }
 
                     if (!primeraLinea && jugador.linea) {
@@ -127,6 +143,7 @@ class Bingo(
 
 
                 }
+
                 Utilidades.pausar(consola)
             }
         }
