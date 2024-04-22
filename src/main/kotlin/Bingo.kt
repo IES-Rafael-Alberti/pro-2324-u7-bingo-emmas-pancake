@@ -66,11 +66,14 @@ class Bingo(
         var ganador: String? = null
         var primeraLinea = false
         var primeraFinal = false
+        var rondas = 0
 
         while (!finJuego){
 
             val listaNumeros = bombo.sacarBolas()
             for (num in listaNumeros) {
+                rondas++
+                consola.imprimir(" -*- Ronda $rondas -*- ")
                 for (jugador in jugadores) {
                     jugador.marcarNumero(num)
                     consola.imprimir(jugador.nombre)
@@ -94,6 +97,7 @@ class Bingo(
                         finJuego = true
                         ganador = jugador.nombre
                     }
+
 
                 }
                 Utilidades.pausar(consola)
