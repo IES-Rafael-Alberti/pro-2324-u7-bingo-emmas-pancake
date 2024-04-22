@@ -8,6 +8,7 @@ class Bingo(
 ) {
     private var finJuego = false
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
+    private val offline = (bombo is IBomboPideBolas)
 
     companion object {
         private const val NOMBRE_JUGADOR_RED = "EMMANUEL_ZZZ"
@@ -59,6 +60,13 @@ class Bingo(
     }
 
 
+    private fun mostrarInicioPartida() {
+        for (jugador in jugadores) {
+
+        }
+    }
+
+
     /** Ejecuta una partida de bingo hasta que un jugador complete uno de sus cartones
      */
     fun jugar() {
@@ -66,22 +74,35 @@ class Bingo(
         var ganador: String? = null
         var primeraLinea = false
         var primeraFinal = false
-        var rondas = 0
+        var ronda: Int
 
         while (!finJuego){
 
             val listaNumeros = bombo.sacarBolas()
+            ronda = bombo.numRondas
+
+            consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString("")}")
+            if (offline) {
+                gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString("")}")
+            }
+
             for (num in listaNumeros) {
-                rondas++
-                consola.imprimir("-*- Ronda $rondas -*- ")
                 for (jugador in jugadores) {
-                    var cont = 1
+                    var numCarton = 1
                     jugador.marcarNumero(num)
 
                     for (carton in jugador.listaCartones) {
-                        consola.imprimir("CARTON ${jugador.nombre} - $cont (${carton.aciertos} de 18)")
-                        cont++
-                        consola.imprimir(generador.retornarCartonVisual(carton.casillas))
+                        consola.imprimir("          " +
+                                "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
+                                generador.retornarCartonVisual(carton.casillas))
+
+                        if (offline) {
+                            gestorFichero.escribir(fichero, "          " +
+                                    "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
+                                    generador.retornarCartonVisual(carton.casillas))
+                        }
+
+                        numCarton++
                     }
 
                     if (!primeraLinea && jugador.linea) {

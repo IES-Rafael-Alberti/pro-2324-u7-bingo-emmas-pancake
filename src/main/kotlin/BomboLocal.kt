@@ -1,9 +1,14 @@
 class BomboLocal(private val gestorConsola: GestorConsola) : IBombo, IBomboPideBolas {
     private val bomboLocal = Pila<Int>()
     private var numBolas = NumBolas.ALETORIO
+    override var numRondas = 0
 
     init {
         meterBolas()
+    }
+
+    private fun aumentarRonda() {
+        numRondas++
     }
 
 
@@ -36,6 +41,7 @@ class BomboLocal(private val gestorConsola: GestorConsola) : IBombo, IBomboPideB
             }
         }
 
+        aumentarRonda()
         return bolasSacadas
     }
 

@@ -24,15 +24,16 @@ import java.io.File
 
 class BomboCentral(private val rutaBingoCentral: String, private val gestorFicheros: IFicheros) : IBombo {
 
-    var numRondas = 1
+    override var numRondas = 1
     override fun sacarBolas(): List<Int> {
         var contador = 0
-        var numeros = mutableListOf<Int>()
+        val numeros = mutableListOf<Int>()
         val fichero = File(rutaBingoCentral)
         do{
             val lineas = gestorFicheros.leer(fichero)
             if (lineas!= null && numRondas == lineas.size){
                 lineas.last().split(" ").map { it.toIntOrNull() }.forEach {numeroAAnadir-> if (numeroAAnadir !=null) numeros.add(numeroAAnadir) }
+                numRondas = lineas.size
             }
 
             Thread.sleep(500)

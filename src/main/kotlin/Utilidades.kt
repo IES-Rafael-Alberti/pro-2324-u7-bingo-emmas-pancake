@@ -118,10 +118,23 @@ class Utilidades {
 
 
         /** Pausa el programa hasta que el usuario pulse enter
+         *
+         * @param consola la consola que imprime el mensaje
          */
         fun pausar(consola: IConsola) {
             consola.imprimir("Pulsa ENTER para continuar...")
             readln()
+        }
+
+
+        /** Comprueba si el juego es offline
+         *
+         * @param bombo el bombo que usamos en la partida
+         *
+         * @return true si es offline, false si es online
+         */
+        fun esOffline(bombo: IBombo): Boolean {
+            return (bombo is IBomboPideBolas)
         }
 
     }
