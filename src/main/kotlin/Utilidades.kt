@@ -115,6 +115,15 @@ class Utilidades {
             val formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
             return ahora.format(formato)
         }
+
+
+        /** Pausa el programa hasta que el usuario pulse enter
+         */
+        fun pausar() {
+            println("pulsa ENTER para continuar...")
+            readln()
+        }
+
     }
 
 }
