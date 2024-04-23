@@ -110,7 +110,7 @@ class Bingo(
                     }
                     consola.imprimir(mensaje + cartones)
 
-                    var lista = mutableListOf<Int>()
+                    val lista = mutableListOf<Int>()
                     for (carton in jugador.listaCartones) {
                         if (offline) {
                             gestorFichero.escribir(fichero, "         " +

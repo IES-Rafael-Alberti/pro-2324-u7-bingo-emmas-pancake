@@ -3,7 +3,7 @@
 import de.m3y.kformat.Table
 import de.m3y.kformat.table
 
-class GeneradorVisualCartonKFormat() : IGeneradorVisualCarton {
+class GeneradorVisualCartonKFormat : IGeneradorVisualCarton {
 
     override fun retornarCartonVisual(casillas: Array<Array<Casilla?>>): String {
 
@@ -32,7 +32,7 @@ class GeneradorVisualCartonKFormat() : IGeneradorVisualCarton {
 
             hints {
                 cabecera.forEach {
-                    alignment(it.toString(), Table.Hints.Alignment.CENTER)
+                    alignment(it, Table.Hints.Alignment.CENTER)
                 }
                 borderStyle = Table.BorderStyle.SINGLE_LINE
             }

@@ -1,5 +1,4 @@
 import java.io.File
-import kotlin.math.log
 
 fun main(args: Array<String>) {
     val gestorConsola = GestorConsola()
