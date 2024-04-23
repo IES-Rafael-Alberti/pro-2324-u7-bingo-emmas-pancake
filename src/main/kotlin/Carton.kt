@@ -79,8 +79,7 @@ class Carton {
         obtenercombinacion()
         val lista = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8).shuffled()
         //este contador me dice cuantas filas de 3 de 2 de 1 tiene el carton
-        var contador = 0
-        for (i in lista) {
+        for ((contador, i) in lista.withIndex()) {
             //el contador de 0 a 1 va a poner 3 numeros por columnas
             if (contador < 2) {
                 colocar3numeros(lista[i])
@@ -93,7 +92,6 @@ class Carton {
                     colocar1numeros(lista[i])
                 }
             }
-            contador++
 
         }
     }
