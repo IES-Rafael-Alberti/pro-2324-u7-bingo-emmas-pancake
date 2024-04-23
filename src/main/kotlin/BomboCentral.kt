@@ -24,7 +24,7 @@ import java.io.File
 
 class BomboCentral(private val rutaBingoCentral: String, private val gestorFicheros: IFicheros) : IBombo {
 
-    override var numRondas = 0
+    override var numRondas = 1
     override fun sacarBolas(): List<Int> {
         var contador = 0
         val numeros = mutableListOf<Int>()

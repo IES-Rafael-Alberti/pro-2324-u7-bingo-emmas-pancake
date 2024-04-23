@@ -99,7 +99,7 @@ class Bingo(
             var mensaje = ""
             var cartones = ""
 
-            ronda = bombo.numRondas
+            ronda = bombo.numRondas - 1
 
             consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
             if (offline) {
