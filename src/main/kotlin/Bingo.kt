@@ -69,6 +69,15 @@ class Bingo(
 
 
     private fun imprimirInicioPartida() {
+        var numCarton = 1
+        for (jugador in jugadores) {
+
+            for (carton in jugador.listaCartones) {
+                "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
+                        genVisualCarton.retornarCartonVisual(carton.casillas)
+                numCarton ++
+            }
+        }
 
     }
 
@@ -83,6 +92,7 @@ class Bingo(
         var ronda: Int
 
         confirmarConexion()
+        imprimirInicioPartida()
 
         while (!finJuego){
             val listaNumeros = bombo.sacarBolas()
