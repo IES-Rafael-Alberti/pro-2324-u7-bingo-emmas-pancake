@@ -92,7 +92,7 @@ class Bingo(
             ronda = bombo.numRondas
 
             consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
-            if (bombo is IBomboPideBolas) {
+            if (offline) {
                 gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
             }
 
@@ -106,7 +106,7 @@ class Bingo(
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                 generador.retornarCartonVisual(carton.casillas)
 
-                        if (bombo is IBomboPideBolas && carton.contiene(num)) {
+                        if (offline && carton.contiene(num)) {
                             mensaje+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
                                     "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
                         }
@@ -117,7 +117,7 @@ class Bingo(
 
                     val lista = mutableListOf<Int>()
                     for (carton in jugador.listaCartones) {
-                        if (bombo is IBomboPideBolas) {
+                        if (offline) {
                             gestorFichero.escribir(fichero, "         " +
                                     "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                     generador.retornarCartonVisual(carton.casillas))
@@ -125,7 +125,7 @@ class Bingo(
                             lista.add(carton.aciertosPorRondas)
                         }
                     }
-                    if (bombo !is IBomboPideBolas) {
+                    if (!offline) {
                         gestorFichero.escribir(
                             fichero,
                             "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas} - ${lista[0]} - ${lista[1]}"
@@ -151,7 +151,7 @@ class Bingo(
 
                 }
 
-                if (bombo is IBomboPideBolas) {
+                if (offline) {
                     Utilidades.pausar(consola)
                 }
 
