@@ -151,7 +151,10 @@ class Bingo(
 
                 }
 
-                Utilidades.pausar(consola)
+                if (bombo is IBomboPideBolas) {
+                    Utilidades.pausar(consola)
+                }
+
             }
         }
         gestorFichero.escribir(fichero, "$ganador ha ganado!\n")
