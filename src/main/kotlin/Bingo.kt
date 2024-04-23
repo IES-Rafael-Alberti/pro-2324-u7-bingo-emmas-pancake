@@ -28,7 +28,7 @@ class Bingo(
         if (bombo is IBomboPideBolas) {
             val numCartones = Utilidades.preguntarCartones(consola)
 
-            listaJugadores.add(Jugador("GladOS", numCartones))
+            listaJugadores.add(Jugador("CPU", numCartones))
 
             for (i in 1..cantidadJugadores) {
                 println("Introduce el nombre del jugador ${i + 1}: ")
@@ -63,8 +63,13 @@ class Bingo(
 
     private fun confirmarConexion() {
         for (jugador in jugadores) {
-            gestorFichero.escribir(fichero, "$jugador - ok")
+            gestorFichero.escribir(fichero, "${jugador.nombre} - ok\n")
         }
+    }
+
+
+    private fun imprimirInicioPartida() {
+
     }
 
 
@@ -80,17 +85,17 @@ class Bingo(
         confirmarConexion()
 
         while (!finJuego){
-
             val listaNumeros = bombo.sacarBolas()
+            var mensaje = ""
+            var cartones = ""
+
             ronda = bombo.numRondas
 
             consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
-            if (offline) {
+            if (bombo is IBomboPideBolas) {
                 gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
             }
 
-            var mensaje = ""
-            var cartones = ""
             for (num in listaNumeros) {
 
                 for (jugador in jugadores) {
@@ -101,7 +106,7 @@ class Bingo(
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                 generador.retornarCartonVisual(carton.casillas)
 
-                        if (offline && carton.contiene(num)) {
+                        if (bombo is IBomboPideBolas && carton.contiene(num)) {
                             mensaje+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
                                     "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
                         }
@@ -112,7 +117,7 @@ class Bingo(
 
                     val lista = mutableListOf<Int>()
                     for (carton in jugador.listaCartones) {
-                        if (offline) {
+                        if (bombo is IBomboPideBolas) {
                             gestorFichero.escribir(fichero, "         " +
                                     "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                     generador.retornarCartonVisual(carton.casillas))
@@ -120,7 +125,7 @@ class Bingo(
                             lista.add(carton.aciertosPorRondas)
                         }
                     }
-                    if (!offline) {
+                    if (bombo !is IBomboPideBolas) {
                         gestorFichero.escribir(
                             fichero,
                             "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas} - ${lista[0]} - ${lista[1]}"
