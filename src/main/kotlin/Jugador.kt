@@ -40,7 +40,7 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
             }
     }
 
-    fun agregarCartones(num:Int) {
+    private fun agregarCartones(num:Int) {
         for (i in 1..num){
             listaCartones.add(Carton())
         }
