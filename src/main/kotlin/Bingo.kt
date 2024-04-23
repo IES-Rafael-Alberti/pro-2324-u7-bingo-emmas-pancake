@@ -73,7 +73,7 @@ class Bingo(
         for (jugador in jugadores) {
 
             for (carton in jugador.listaCartones) {
-                "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
+                "        " + "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                         genVisualCarton.retornarCartonVisual(carton.casillas)
                 numCarton ++
             }
@@ -138,7 +138,7 @@ class Bingo(
                     if (!offline) {
                         gestorFichero.escribir(
                             fichero,
-                            "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas} - ${lista[0]} - ${lista[1]}"
+                            "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas} - ${lista[0]} - ${lista[1]}\n"
                         )
                     }
                     if (!primeraLinea && jugador.linea) {
