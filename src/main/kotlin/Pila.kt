@@ -23,37 +23,12 @@ open class Pila<Int> {
     }
 
 
-    /** Devuelve la última bola agregada
-     *
-     * @return número de la bola
-     */
-    fun peek(): Int? {
-        return elementos.lastOrNull()
-    }
-
-
-    /** Devuelve la cantidad de bolas de la pila
-     *
-     * @return número de bolas
-     */
-    fun size(): kotlin.Int {
-        return elementos.size
-    }
-
-
     /** Verifica si la pila está vacía
      *
      * @return depende de si está vacía o no
      */
     private fun isPilaEmpty(): Boolean {
         return elementos.isEmpty()
-    }
-
-
-    /** Elimina todos los elementos de la pila
-     */
-    fun clear() {
-        elementos.clear()
     }
 
 }
