@@ -28,14 +28,15 @@ class BomboCentral(private val rutaBingoCentral: String, private val gestorFiche
     override fun sacarBolas(): List<Int> {
         var contador = 0
         val numeros = mutableListOf<Int>()
-        val fichero = File(rutaBingoCentral)
+        val fichero = File(rutaBingoCentral).listFiles { _, nombre -> nombre.startsWith("bomboBingoCentral_") }?.maxByOrNull { it.lastModified() }
+        if (fichero != null)
         do{
             val lineas = gestorFicheros.leer(fichero)
             if (lineas!= null && numRondas == lineas.size){
                 lineas.last().split(" ").map { it.toIntOrNull() }.forEach {numeroAAnadir-> if (numeroAAnadir !=null) numeros.add(numeroAAnadir) }
-                numRondas = lineas.size
+                numRondas++
             }
-
+            println("xd")
             Thread.sleep(500)
             contador++
         }while (numeros.size <= 0 && contador < 120)

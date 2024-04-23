@@ -25,7 +25,7 @@ class Bingo(
     private fun crearJugadores(cantidadJugadores: Int): List<Jugador> {
         val listaJugadores = mutableListOf<Jugador>()
 
-        if (bombo is IBomboPideBolas) {
+        if (offline) {
             val numCartones = Utilidades.preguntarCartones(consola)
 
             listaJugadores.add(Jugador("CPU", numCartones))

@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
     val gestorFicheros = FicherosLog(gestorConsola)
 
 
-    val (formato, rutaBingoCentral) = Utilidades.comprobarArgumentos(args, gestorConsola)
+    val (formato, rutaBingoCentral) = Utilidades.comprobarArgumentos(arrayOf("-b","C:\\xd"), gestorConsola)
 
     val bombo =
         if (rutaBingoCentral != null) {
@@ -30,7 +30,7 @@ fun main(args: Array<String>) {
         }
 
     if (logBingo != null){
-        val txt = logBingo.listFiles { _, nombre -> nombre.endsWith(".txt") }?.maxByOrNull { it.lastModified() }
+        val txt = logBingo.listFiles { _, nombre -> nombre.startsWith("bomboBingoCentralUsuarios") }?.maxByOrNull { it.lastModified() }
 
         val bingo = if (bombo is BomboCentral){
             if (txt != null) {
