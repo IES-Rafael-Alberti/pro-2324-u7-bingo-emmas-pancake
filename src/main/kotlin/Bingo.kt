@@ -12,6 +12,7 @@ class Bingo(
 
     companion object {
         private const val NOMBRE_JUGADOR_RED = "EMMANUEL_ZZZ"
+        private const val ACIERTOS_PARA_BINGO = 18
     }
 
 
@@ -69,17 +70,47 @@ class Bingo(
     }
 
 
-    /** Imprime los cartones de todos los jugadores al inicio de la partida
+    /** Devuelve un cartón en una cadena
+     *
+     * @param jugador un jugador
+     * @param carton el cartón del jugador
+     * @param numCarton el número del cartón en la partida
+     *
+     * @return cartón visual
      */
-    private fun imprimirInicioPartida() {
-        var numCarton = 1
-        for (jugador in jugadores) {
+    private fun imprimirCarton(jugador: Jugador, carton: Carton, numCarton: Int): String {
+        return "\n         CARTÓN ${jugador.nombre} - ${String.format("%02d", numCarton)}" +
+                " (${carton.aciertos} de ${ACIERTOS_PARA_BINGO}\n)" +
+                genVisualCarton.retornarCartonVisual(carton.casillas) + "\n\n"
 
-            for (carton in jugador.listaCartones) {
-                "        " + "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
-                        genVisualCarton.retornarCartonVisual(carton.casillas)
-                numCarton ++
-            }
+    }
+
+
+    /** Devuelve el mensaje de un jugador que ha acertado un número
+     *
+     * @param jugador el jugador que ha acertado un número
+     * @param carton el cartón en el que se ha encontrado el número
+     * @param numCarton el número del cartón en la partida
+     * @param num el número que ha coincidido en el cartón
+     *
+     * @return mensaje de jugador
+     */
+    private fun imprimirMensaje(jugador: Jugador, carton: Carton, numCarton: Int, num: Int): String {
+        return "$num - ${jugador.id} (${jugador.nombre}):  " +
+                "cartón${String.format("%02d", numCarton)} " +
+                "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
+    }
+
+
+    private fun mostrarResultadosRondas(mensajesAciertos: String, cartones: String) {
+        if (!Utilidades.isOffline(bombo)) {
+            consola.imprimir(mensajesAciertos)
+            consola.imprimir(cartones)
+        } else {
+            consola.imprimir(mensajesAciertos)
+            gestorFichero.escribir(fichero, mensajesAciertos)
+            consola.imprimir(cartones)
+            gestorFichero.escribir(fichero, cartones)
         }
 
     }
@@ -88,26 +119,54 @@ class Bingo(
     /** Ejecuta una partida de bingo hasta que un jugador complete uno de sus cartones
      */
     fun jugar() {
-        val generador = GeneradorVisualCartonInterno()
         var ganador: String? = null
         var primeraLinea = false
         var primeraFinal = false
         var ronda: Int
 
         confirmarConexion()
-        imprimirInicioPartida()
 
         while (!finJuego){
             val listaNumeros = bombo.sacarBolas()
-            var mensaje = ""
+            var numCarton = 0
+            var mensajesAciertos = ""
             var cartones = ""
 
             ronda = bombo.numRondas - 1
+            val mensajeRonda = "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n\n"
 
-            consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
+            consola.imprimir(mensajeRonda)
             if (Utilidades.isOffline(bombo)) {
-                gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
+                gestorFichero.escribir(fichero, mensajeRonda)
             }
+
+            for (jugador in jugadores) {
+
+                for (carton in jugador.listaCartones) {
+                    numCarton++
+
+                    for (num in listaNumeros) {
+
+                        if (carton.contiene(num)) {
+                            carton.comprobarNumero(num)
+                            mensajesAciertos += imprimirMensaje(jugador, carton, numCarton, num)
+                        }
+
+                    }
+
+                    cartones += imprimirCarton(jugador, carton, numCarton)
+
+                }
+
+            }
+
+            if (mensajesAciertos == "") {
+                mensajesAciertos = "Sin aciertos...\n"
+            }
+
+            mostrarResultadosRondas(mensajesAciertos, cartones)
+
+
 
             for (num in listaNumeros) {
 
@@ -117,23 +176,23 @@ class Bingo(
                     for (carton in jugador.listaCartones) {
                         cartones +="         " +
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
-                                generador.retornarCartonVisual(carton.casillas)
-
+                                genVisualCarton.retornarCartonVisual(carton.casillas)
+                        
                         if (Utilidades.isOffline(bombo) && carton.contiene(num)) {
-                            mensaje+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
+                            mensajesAciertos+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
                                     "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
                         }
 
                         numCarton++
                     }
-                    consola.imprimir(mensaje + cartones)
+                    consola.imprimir(mensajesAciertos + cartones)
 
                     val lista = mutableListOf<Int>()
                     for (carton in jugador.listaCartones) {
                         if (Utilidades.isOffline(bombo)) {
                             gestorFichero.escribir(fichero, "         " +
                                     "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
-                                    generador.retornarCartonVisual(carton.casillas))
+                                    genVisualCarton.retornarCartonVisual(carton.casillas))
                         }else{
                             lista.add(carton.aciertosPorRondas)
                         }
@@ -164,10 +223,10 @@ class Bingo(
 
                 }
 
-                if (Utilidades.isOffline(bombo)) {
-                    Utilidades.pausar(consola)
-                }
+            }
 
+            if (Utilidades.isOffline(bombo)) {
+                Utilidades.pausar(consola)
             }
         }
         gestorFichero.escribir(fichero, "$ganador ha ganado!\n")
