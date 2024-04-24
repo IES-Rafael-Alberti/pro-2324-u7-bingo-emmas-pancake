@@ -206,14 +206,27 @@ class Carton {
      *
      * */
     fun comprobarNumero(num: Int) {
-        aciertosPorRondas = 0
         for (casilla in casillas) {
             for (numero in casilla){
                 if (numero != null) {
                     if (numero.numero == num){
                         numero.numeroSalido=true
-                        aciertosPorRondas++
                         aciertos++
+                    }
+                }
+            }
+        }
+    }
+
+    fun comprobarNumerosPorRondas(listaNumeros:List<Int>){
+        aciertosPorRondas = 0
+        for (numeroSalido in listaNumeros){
+            for (casilla in casillas) {
+                for (numero in casilla){
+                    if (numero != null) {
+                        if (numero.numero == numeroSalido){
+                            aciertosPorRondas++
+                        }
                     }
                 }
             }
