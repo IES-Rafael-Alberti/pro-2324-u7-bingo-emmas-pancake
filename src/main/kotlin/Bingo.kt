@@ -9,7 +9,6 @@ class Bingo(
 ) {
     private var finJuego = false
     private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
-    private val offline = (bombo is IBomboPideBolas)
 
     companion object {
         private const val NOMBRE_JUGADOR_RED = "EMMANUEL_ZZZ"
@@ -25,7 +24,7 @@ class Bingo(
     private fun crearJugadores(cantidadJugadores: Int): List<Jugador> {
         val listaJugadores = mutableListOf<Jugador>()
 
-        if (offline) {
+        if (Utilidades.isOffline(bombo)) {
             val numCartones = Utilidades.preguntarCartones(consola)
 
             listaJugadores.add(Jugador("CPU", numCartones))
@@ -61,6 +60,8 @@ class Bingo(
     }
 
 
+    /** Confirma la conexion al fichero imprimiendo un ok
+     */
     private fun confirmarConexion() {
         for (jugador in jugadores) {
             gestorFichero.escribir(fichero, "${jugador.nombre} - ok\n")
@@ -68,6 +69,8 @@ class Bingo(
     }
 
 
+    /** Imprime los cartones de todos los jugadores al inicio de la partida
+     */
     private fun imprimirInicioPartida() {
         var numCarton = 1
         for (jugador in jugadores) {
@@ -102,7 +105,7 @@ class Bingo(
             ronda = bombo.numRondas - 1
 
             consola.imprimir("Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
-            if (offline) {
+            if (Utilidades.isOffline(bombo)) {
                 gestorFichero.escribir(fichero, "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n")
             }
 
@@ -116,7 +119,7 @@ class Bingo(
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                 generador.retornarCartonVisual(carton.casillas)
 
-                        if (offline && carton.contiene(num)) {
+                        if (Utilidades.isOffline(bombo) && carton.contiene(num)) {
                             mensaje+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
                                     "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
                         }
@@ -127,7 +130,7 @@ class Bingo(
 
                     val lista = mutableListOf<Int>()
                     for (carton in jugador.listaCartones) {
-                        if (offline) {
+                        if (Utilidades.isOffline(bombo)) {
                             gestorFichero.escribir(fichero, "         " +
                                     "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                     generador.retornarCartonVisual(carton.casillas))
@@ -135,7 +138,7 @@ class Bingo(
                             lista.add(carton.aciertosPorRondas)
                         }
                     }
-                    if (!offline) {
+                    if (!Utilidades.isOffline(bombo)) {
                         gestorFichero.escribir(
                             fichero,
                             "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas} - ${lista[0]} - ${lista[1]}\n"
@@ -161,7 +164,7 @@ class Bingo(
 
                 }
 
-                if (offline) {
+                if (Utilidades.isOffline(bombo)) {
                     Utilidades.pausar(consola)
                 }
 

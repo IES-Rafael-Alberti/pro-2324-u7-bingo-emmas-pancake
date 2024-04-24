@@ -126,6 +126,17 @@ class Utilidades {
             readln()
         }
 
+
+        /** Comprueba si bombo es offline u online
+         *
+         * @param bombo el bombo que se comprueba
+         *
+         * @return - True si bombo es Local - False si bombo es Central
+         */
+        fun isOffline(bombo: IBombo): Boolean {
+            return (bombo is IBomboPideBolas)
+        }
+
     }
 
 }
