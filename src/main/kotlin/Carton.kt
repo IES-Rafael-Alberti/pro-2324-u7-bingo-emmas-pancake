@@ -258,7 +258,7 @@ class Carton {
     /**
      *
      * */
-    fun comprobarA3Numeros(): Boolean {
+    fun comprobarA1Numeros(): Boolean {
         var contadorNumerosSalidos = 0
         for (lineas in casillas){
             for (numero in lineas){

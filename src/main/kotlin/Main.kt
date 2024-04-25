@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
     val gestorFicheros = FicherosLog(gestorConsola)
 
 
-    val (formato, rutaBingoCentral) = Utilidades.comprobarArgumentos(arrayOf("-b","C:\\xd"), gestorConsola)
+    val (formato, rutaBingoCentral) = Utilidades.comprobarArgumentos(args, gestorConsola)
 
     val bombo =
         if (rutaBingoCentral != null) {

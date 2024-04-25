@@ -65,7 +65,7 @@ class Bingo(
      */
     private fun confirmarConexion() {
         for (jugador in jugadores) {
-            gestorFichero.escribir(fichero, "${jugador.nombre} - ok\n")
+            gestorFichero.escribir(fichero, "${jugador.nombre} - ok")
         }
     }
 
@@ -79,9 +79,9 @@ class Bingo(
      * @return cartón visual
      */
     private fun imprimirCarton(jugador: Jugador, carton: Carton, numCarton: Int): String {
-        return "\n         CARTÓN ${jugador.nombre} - ${String.format("%02d", numCarton)}" +
-                " (${carton.aciertos} de ${ACIERTOS_PARA_BINGO}\n)" +
-                genVisualCarton.retornarCartonVisual(carton.casillas) + "\n\n"
+        return "         CARTÓN ${jugador.nombre} - ${String.format("%02d", numCarton)}" +
+                " (${carton.aciertos} de ${ACIERTOS_PARA_BINGO})\n" +
+                genVisualCarton.retornarCartonVisual(carton.casillas)
 
     }
 
@@ -102,8 +102,15 @@ class Bingo(
     }
 
 
-    private fun mostrarResultadosRondas(mensajesAciertos: String, cartones: String) {
+    /** Imprime en el fichero y en la consola la información necesaria según el tipo de partida
+     *
+     * @param mensajesAciertos mensaje de cada acierto por cada cartón
+     * @param cartones cadena de todos los cartones
+     * @param mensajeOnline mensaje de la información necesaria para cada ronda de las partidas online
+     */
+    private fun mostrarResultadosRondas(mensajesAciertos: String, cartones: String, mensajeOnline: String) {
         if (!Utilidades.isOffline(bombo)) {
+            gestorFichero.escribir(fichero, mensajeOnline)
             consola.imprimir(mensajesAciertos)
             consola.imprimir(cartones)
         } else {
@@ -121,7 +128,7 @@ class Bingo(
     fun jugar() {
         var ganador: String? = null
         var primeraLinea = false
-        var primeraFinal = false
+        var a1numero = false
         var ronda: Int
 
         confirmarConexion()
@@ -131,6 +138,8 @@ class Bingo(
             var numCarton = 0
             var mensajesAciertos = ""
             var cartones = ""
+            var mensajeOnline = ""
+            var mensajeLogro = ""
 
             ronda = bombo.numRondas - 1
             val mensajeRonda = "Ronda $ronda - ${listaNumeros.joinToString(" ")}\n\n"
@@ -141,8 +150,10 @@ class Bingo(
             }
 
             for (jugador in jugadores) {
+                mensajeOnline += "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas}"
 
                 for (carton in jugador.listaCartones) {
+                    var aciertosPorRonda = 0
                     numCarton++
 
                     for (num in listaNumeros) {
@@ -150,11 +161,35 @@ class Bingo(
                         if (carton.contiene(num)) {
                             carton.comprobarNumero(num)
                             mensajesAciertos += imprimirMensaje(jugador, carton, numCarton, num)
+                            aciertosPorRonda++
                         }
 
                     }
 
+                    mensajeOnline += " - $aciertosPorRonda"
                     cartones += imprimirCarton(jugador, carton, numCarton)
+
+                    if (carton.aciertosPorRondas > 0 && !primeraLinea) {
+                        if (carton.comprobarLinea()) {
+                            cambiarGeneracionBolasA3()
+                            primeraLinea = true
+                            mensajeLogro = "!Línea de ${jugador.id} (${jugador.nombre})!\n"
+                            mensajeOnline += " - Linea"
+                        }
+                    } else if (carton.aciertosPorRondas > 0 && !a1numero) {
+                        if (carton.comprobarA1Numeros()) {
+                            cambiarGeneracionBolasA1()
+                            a1numero = true
+                            mensajeLogro = "!${jugador.id} (${jugador.nombre}) a 1 bola!\n"
+                            mensajeOnline += " - Solo1"
+                        }
+                    } else if (carton.aciertosPorRondas > 0 && !finJuego) {
+                        if (carton.comprobarBingo()){
+                            mensajeOnline += " - Bingo"
+                            finJuego = true
+                            ganador = jugador.nombre
+                        }
+                    }
 
                 }
 
@@ -162,9 +197,15 @@ class Bingo(
 
             if (mensajesAciertos == "") {
                 mensajesAciertos = "Sin aciertos...\n"
+            } else if (mensajeLogro != "") {
+                mensajesAciertos += mensajeLogro
             }
 
-            mostrarResultadosRondas(mensajesAciertos, cartones)
+            mostrarResultadosRondas(mensajesAciertos, cartones, mensajeOnline)
+
+            if (Utilidades.isOffline(bombo)) {
+                Utilidades.pausar(consola)
+            }
 
 
 
@@ -177,7 +218,7 @@ class Bingo(
                         cartones +="         " +
                                 "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
                                 genVisualCarton.retornarCartonVisual(carton.casillas)
-                        
+
                         if (Utilidades.isOffline(bombo) && carton.contiene(num)) {
                             mensajesAciertos+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
                                     "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
@@ -209,10 +250,10 @@ class Bingo(
                         primeraLinea = true
                     }
 
-                    if (!primeraFinal && jugador.a1Numero) {
+                    if (!a1numero && jugador.a1Numero) {
                         cambiarGeneracionBolasA1()
                         gestorFichero.escribir(fichero, "${jugador.nombre} a 1 bola\n")
-                        primeraFinal = true
+                        a1numero = true
                     }
 
                     if (jugador.bingo) {

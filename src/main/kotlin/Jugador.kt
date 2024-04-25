@@ -28,7 +28,7 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
                     }
                 }
                 if (!a1Numero || !carton.a1Numero){
-                    if (carton.comprobarA3Numeros()){
+                    if (carton.comprobarA1Numeros()){
                         a1Numero = true
                     }
                 }
