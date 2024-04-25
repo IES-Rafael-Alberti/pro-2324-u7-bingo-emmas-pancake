@@ -149,7 +149,7 @@ class Bingo(
             }
 
             for (jugador in jugadores) {
-                mensajeOnline += "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas}"
+                mensajeOnline += "$NOMBRE_JUGADOR_RED - ronda $ronda"
 
                 for (carton in jugador.listaCartones) {
                     var aciertosPorRonda = 0
