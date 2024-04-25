@@ -125,7 +125,7 @@ class Bingo(
     /** Ejecuta una partida de bingo hasta que un jugador complete uno de sus cartones
      */
     fun jugar() {
-        var ganador: String? = null
+        var ganador: String?
         var primeraLinea = false
         var a1numero = false
         var ronda: Int
@@ -186,7 +186,7 @@ class Bingo(
                         if (carton.comprobarBingo()) {
                             finJuego = true
                             ganador = jugador.nombre
-                            mensajeLogro = "¡¡¡BINGO de ${jugador.id} (${jugador.nombre})!!!"
+                            mensajeLogro = "¡¡¡BINGO de ${jugador.id} ($ganador)!!!"
                             mensajeOnline += " - Bingo"
                         }
                     }
