@@ -168,21 +168,21 @@ class Bingo(
                     mensajeOnline += " - $aciertosPorRonda"
                     cartones += imprimirCarton(jugador, carton, numCarton)
 
-                    if (carton.aciertosPorRondas > 0 && !primeraLinea) {
+                    if (!primeraLinea) {
                         if (carton.comprobarLinea()) {
                             cambiarGeneracionBolasA3()
                             primeraLinea = true
                             mensajeLogro = "¡Línea de ${jugador.id} (${jugador.nombre})!\n"
                             mensajeOnline += " - Linea"
                         }
-                    } else if (carton.aciertosPorRondas > 0 && !a1numero) {
+                    } else if (!a1numero) {
                         if (carton.comprobarA1Numeros()) {
                             cambiarGeneracionBolasA1()
                             a1numero = true
                             mensajeLogro = "¡${jugador.id} (${jugador.nombre}) a 1 bola!\n"
                             mensajeOnline += " - Solo1"
                         }
-                    } else if (carton.aciertosPorRondas > 0 && !finJuego) {
+                    } else if (!finJuego) {
                         if (carton.comprobarBingo()) {
                             finJuego = true
                             ganador = jugador.nombre

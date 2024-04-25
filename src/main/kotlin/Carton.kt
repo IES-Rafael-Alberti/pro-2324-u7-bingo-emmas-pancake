@@ -5,7 +5,6 @@ class Carton {
     var a1Numero = false
     var bingo = false
     var aciertos = 0
-    var aciertosPorRondas=0
     init {
         listaAleatoria()
     }
