@@ -8,7 +8,7 @@ class Bingo(
     private val genVisualCarton: IGeneradorVisualCarton
 ) {
     private var finJuego = false
-    private val jugadores: List<Jugador> = crearJugadores(Utilidades.preguntarJugadores(consola))
+    private val jugadores: List<Jugador> = crearJugadores()
 
     companion object {
         private const val NOMBRE_JUGADOR_RED = "EMMANUEL_ZZZ"
@@ -22,10 +22,12 @@ class Bingo(
      *
      * @return La lista con todos los jugadores
      */
-    private fun crearJugadores(cantidadJugadores: Int): List<Jugador> {
+    private fun crearJugadores(): List<Jugador> {
         val listaJugadores = mutableListOf<Jugador>()
 
-        if (bombo is IBomboPideBolas) {
+        if (Utilidades.isOffline(bombo)) {
+            val cantidadJugadores = Utilidades.preguntarJugadores(consola)
+
             val numCartones = Utilidades.preguntarCartones(consola)
 
             listaJugadores.add(Jugador("CPU", numCartones))
@@ -109,15 +111,15 @@ class Bingo(
      * @param mensajeOnline mensaje de la información necesaria para cada ronda de las partidas online
      */
     private fun mostrarResultadosRondas(mensajesAciertos: String, cartones: String, mensajeOnline: String) {
-        if (!Utilidades.isOffline(bombo)) {
-            gestorFichero.escribir(fichero, mensajeOnline)
-            consola.imprimir(mensajesAciertos)
-            consola.imprimir(cartones)
-        } else {
+        if (bombo is IBomboPideBolas) {
             consola.imprimir(mensajesAciertos)
             gestorFichero.escribir(fichero, mensajesAciertos)
             consola.imprimir(cartones)
             gestorFichero.escribir(fichero, cartones)
+        } else {
+            gestorFichero.escribir(fichero, mensajeOnline)
+            consola.imprimir(mensajesAciertos)
+            consola.imprimir(cartones)
         }
 
     }
