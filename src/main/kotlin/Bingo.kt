@@ -115,6 +115,7 @@ class Bingo(
         } else {
             consola.imprimir(mensajesAciertos)
             gestorFichero.escribir(fichero, mensajesAciertos)
+            Thread.sleep(2000)
             consola.imprimir(cartones)
             gestorFichero.escribir(fichero, cartones)
         }
@@ -177,14 +178,18 @@ class Bingo(
                             mensajeLogro = "¡¡¡BINGO de ${jugador.id} ($ganador)!!!"
                             mensajeLogroOnline += " - Bingo"
                         }
-                    } else if (!a1numero) {
+                    }
+
+                    if (!a1numero && !finJuego) {
                         if (carton.comprobarA1Numeros()) {
                             cambiarGeneracionBolasA1()
                             a1numero = true
                             mensajeLogro = "¡${jugador.id} (${jugador.nombre}) a 1 bola!\n"
                             mensajeLogroOnline += " - Solo1"
                         }
-                    } else if (!primeraLinea) {
+                    }
+
+                    if (!primeraLinea && !a1numero && !finJuego) {
                         if (carton.comprobarLinea()) {
                             cambiarGeneracionBolasA3()
                             primeraLinea = true

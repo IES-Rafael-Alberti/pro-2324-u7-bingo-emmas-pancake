@@ -2,16 +2,16 @@ class Jugador(val nombre: String, numCartones: Int):IJugador {
 
     var listaCartones: MutableList<Carton> = mutableListOf()
     val id: String = generarIdUnica()
-    var linea:Boolean = false
-    var a1Numero:Boolean = false
-    var bingo:Boolean = false
+    private var linea:Boolean = false
+    private var a1Numero:Boolean = false
+    private var bingo:Boolean = false
 
     init{
         agregarCartones(numCartones)
     }
 
     companion object {
-        private var contadorIds = 1
+        private var contadorIds = 0
 
         fun generarIdUnica(): String {
             contadorIds++
