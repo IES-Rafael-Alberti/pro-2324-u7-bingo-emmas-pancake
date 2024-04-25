@@ -218,20 +218,6 @@ class Carton {
         }
     }
 
-    fun comprobarNumerosPorRondas(listaNumeros:List<Int>){
-        aciertosPorRondas = 0
-        for (numeroSalido in listaNumeros){
-            for (casilla in casillas) {
-                for (numero in casilla){
-                    if (numero != null) {
-                        if (numero.numero == numeroSalido){
-                            aciertosPorRondas++
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     /**
      *
@@ -281,22 +267,7 @@ class Carton {
      *
      * */
     fun comprobarBingo(): Boolean {
-        var contadorNumerosSalidos = 0
-        for (lineas in casillas){
-            for (numero in lineas){
-                if (numero != null){
-                    if(numero.numeroSalido){
-                        contadorNumerosSalidos++
-                    }
-                }
-            }
-            if (contadorNumerosSalidos == 18){
-                bingo=true
-                return true
-            }
-        }
-        return false
-
+        return aciertos >= 18
     }
 
     /**
