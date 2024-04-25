@@ -138,6 +138,7 @@ class Bingo(
             var mensajesAciertos = ""
             var cartones = ""
             var mensajeOnline = ""
+            var mensajeLogroOnline = ""
             var mensajeLogro = ""
 
             ronda = bombo.numRondas - 1
@@ -168,26 +169,27 @@ class Bingo(
                     mensajeOnline += " - $aciertosPorRonda"
                     cartones += imprimirCarton(jugador, carton, numCarton)
 
-                    if (!primeraLinea) {
-                        if (carton.comprobarLinea()) {
-                            cambiarGeneracionBolasA3()
-                            primeraLinea = true
-                            mensajeLogro = "¡Línea de ${jugador.id} (${jugador.nombre})!\n"
-                            mensajeOnline += " - Linea"
+
+                    if (!finJuego) {
+                        if (carton.comprobarBingo()) {
+                            finJuego = true
+                            ganador = jugador.nombre
+                            mensajeLogro = "¡¡¡BINGO de ${jugador.id} ($ganador)!!!"
+                            mensajeLogroOnline += " - Bingo"
                         }
                     } else if (!a1numero) {
                         if (carton.comprobarA1Numeros()) {
                             cambiarGeneracionBolasA1()
                             a1numero = true
                             mensajeLogro = "¡${jugador.id} (${jugador.nombre}) a 1 bola!\n"
-                            mensajeOnline += " - Solo1"
+                            mensajeLogroOnline += " - Solo1"
                         }
-                    } else if (!finJuego) {
-                        if (carton.comprobarBingo()) {
-                            finJuego = true
-                            ganador = jugador.nombre
-                            mensajeLogro = "¡¡¡BINGO de ${jugador.id} ($ganador)!!!"
-                            mensajeOnline += " - Bingo"
+                    } else if (!primeraLinea) {
+                        if (carton.comprobarLinea()) {
+                            cambiarGeneracionBolasA3()
+                            primeraLinea = true
+                            mensajeLogro = "¡Línea de ${jugador.id} (${jugador.nombre})!\n"
+                            mensajeLogroOnline += " - Linea"
                         }
                     }
 
@@ -200,6 +202,8 @@ class Bingo(
             } else if (mensajeLogro != "") {
                 mensajesAciertos += mensajeLogro
             }
+
+            mensajeOnline += mensajeLogroOnline
 
             mostrarResultadosRondas(mensajesAciertos, cartones, mensajeOnline)
 
