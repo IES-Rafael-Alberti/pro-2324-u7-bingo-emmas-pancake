@@ -18,8 +18,6 @@ class Bingo(
 
     /** Crea una lista con todos los jugadores
      *
-     * @param cantidadJugadores Cantidad de jugadores sin contar con la IA
-     *
      * @return La lista con todos los jugadores
      */
     private fun crearJugadores(): List<Jugador> {
@@ -36,8 +34,7 @@ class Bingo(
                 println("Introduce el nombre del jugador ${i + 1}: ")
                 listaJugadores.add(Jugador(readln(), numCartones))
             }
-        }
-        else {
+        } else {
             listaJugadores.add(Jugador(NOMBRE_JUGADOR_RED, 2))
         }
 
@@ -67,7 +64,7 @@ class Bingo(
      */
     private fun confirmarConexion() {
         for (jugador in jugadores) {
-            gestorFichero.escribir(fichero, "${jugador.nombre} - ok")
+            gestorFichero.escribir(fichero, "${jugador.nombre} - ok\n")
         }
     }
 
@@ -111,15 +108,15 @@ class Bingo(
      * @param mensajeOnline mensaje de la información necesaria para cada ronda de las partidas online
      */
     private fun mostrarResultadosRondas(mensajesAciertos: String, cartones: String, mensajeOnline: String) {
-        if (bombo is IBomboPideBolas) {
+        if (!Utilidades.isOffline(bombo)) {
+            gestorFichero.escribir(fichero, mensajeOnline)
+            consola.imprimir(mensajesAciertos)
+            consola.imprimir(cartones)
+        } else {
             consola.imprimir(mensajesAciertos)
             gestorFichero.escribir(fichero, mensajesAciertos)
             consola.imprimir(cartones)
             gestorFichero.escribir(fichero, cartones)
-        } else {
-            gestorFichero.escribir(fichero, mensajeOnline)
-            consola.imprimir(mensajesAciertos)
-            consola.imprimir(cartones)
         }
 
     }
@@ -135,7 +132,7 @@ class Bingo(
 
         confirmarConexion()
 
-        while (!finJuego){
+        while (!finJuego) {
             val listaNumeros = bombo.sacarBolas()
             var numCarton = 0
             var mensajesAciertos = ""
@@ -175,21 +172,22 @@ class Bingo(
                         if (carton.comprobarLinea()) {
                             cambiarGeneracionBolasA3()
                             primeraLinea = true
-                            mensajeLogro = "!Línea de ${jugador.id} (${jugador.nombre})!\n"
+                            mensajeLogro = "¡Línea de ${jugador.id} (${jugador.nombre})!\n"
                             mensajeOnline += " - Linea"
                         }
                     } else if (carton.aciertosPorRondas > 0 && !a1numero) {
                         if (carton.comprobarA1Numeros()) {
                             cambiarGeneracionBolasA1()
                             a1numero = true
-                            mensajeLogro = "!${jugador.id} (${jugador.nombre}) a 1 bola!\n"
+                            mensajeLogro = "¡${jugador.id} (${jugador.nombre}) a 1 bola!\n"
                             mensajeOnline += " - Solo1"
                         }
                     } else if (carton.aciertosPorRondas > 0 && !finJuego) {
-                        if (carton.comprobarBingo()){
-                            mensajeOnline += " - Bingo"
+                        if (carton.comprobarBingo()) {
                             finJuego = true
                             ganador = jugador.nombre
+                            mensajeLogro = "¡¡¡BINGO de ${jugador.id} (${jugador.nombre})!!!"
+                            mensajeOnline += " - Bingo"
                         }
                     }
 
@@ -209,71 +207,7 @@ class Bingo(
                 Utilidades.pausar(consola)
             }
 
-
-
-            for (num in listaNumeros) {
-
-                for (jugador in jugadores) {
-                    var numCarton = 1
-                    jugador.marcarNumero(num)
-                    for (carton in jugador.listaCartones) {
-                        cartones +="         " +
-                                "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
-                                genVisualCarton.retornarCartonVisual(carton.casillas)
-
-                        if (Utilidades.isOffline(bombo) && carton.contiene(num)) {
-                            mensajesAciertos+="$num - ${jugador.id} (${jugador.nombre}): cartón0$numCarton" +
-                                    "(${carton.coordenadasAciertos(num)?.joinToString(" ")})\n"
-                        }
-
-                        numCarton++
-                    }
-                    consola.imprimir(mensajesAciertos + cartones)
-
-                    val lista = mutableListOf<Int>()
-                    for (carton in jugador.listaCartones) {
-                        if (Utilidades.isOffline(bombo)) {
-                            gestorFichero.escribir(fichero, "         " +
-                                    "CARTÓN ${jugador.nombre} - 0$numCarton (${carton.aciertos} de 18)\n" +
-                                    genVisualCarton.retornarCartonVisual(carton.casillas))
-                        }else{
-                            lista.add(carton.aciertosPorRondas)
-                        }
-                    }
-                    if (!Utilidades.isOffline(bombo)) {
-                        gestorFichero.escribir(
-                            fichero,
-                            "$NOMBRE_JUGADOR_RED - ronda ${bombo.numRondas} - ${lista[0]} - ${lista[1]}\n"
-                        )
-                    }
-                    if (!primeraLinea && jugador.linea) {
-                        cambiarGeneracionBolasA3()
-                        gestorFichero.escribir(fichero, "${jugador.nombre} ha hecho línea\n")
-                        primeraLinea = true
-                    }
-
-                    if (!a1numero && jugador.a1Numero) {
-                        cambiarGeneracionBolasA1()
-                        gestorFichero.escribir(fichero, "${jugador.nombre} a 1 bola\n")
-                        a1numero = true
-                    }
-
-                    if (jugador.bingo) {
-                        finJuego = true
-                        ganador = jugador.nombre
-                    }
-
-
-                }
-
-            }
-
-            if (Utilidades.isOffline(bombo)) {
-                Utilidades.pausar(consola)
-            }
         }
-        gestorFichero.escribir(fichero, "$ganador ha ganado!\n")
-
     }
 
 }
