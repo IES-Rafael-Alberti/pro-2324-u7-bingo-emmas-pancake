@@ -109,7 +109,7 @@ class Bingo(
      */
     private fun mostrarResultadosRondas(mensajesAciertos: String, cartones: String, mensajeOnline: String) {
         if (!Utilidades.isOffline(bombo)) {
-            gestorFichero.escribir(fichero, mensajeOnline)
+            gestorFichero.escribir(fichero, mensajeOnline + "\n")
             consola.imprimir(mensajesAciertos)
             consola.imprimir(cartones)
         } else {
