@@ -1,6 +1,9 @@
 import java.io.File
 
-fun main(args: Array<String>) {
+fun main() {
+
+    val args = arrayOf("-b", "\\\\PCPROFE\\Bingo")
+
     val gestorConsola = GestorConsola()
 
     val gestorFicheros = FicherosLog(gestorConsola)
