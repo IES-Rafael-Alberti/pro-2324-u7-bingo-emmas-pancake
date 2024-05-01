@@ -1,7 +1,59 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+import java.io.File
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+fun main() {
+
+    val args = arrayOf("-b", "\\\\PCPROFE\\Bingo")
+
+    val gestorConsola = GestorConsola()
+
+    val gestorFicheros = FicherosLog(gestorConsola)
+
+
+    val (formato, rutaBingoCentral) = Utilidades.comprobarArgumentos(args, gestorConsola)
+
+    val bombo =
+        if (rutaBingoCentral != null) {
+            BomboCentral(rutaBingoCentral,gestorFicheros)
+        } else {
+            BomboLocal(gestorConsola)
+        }
+
+    val genVisualCarton =
+        if (formato == "kf") {
+            GeneradorVisualCartonKFormat()
+        } else {
+            GeneradorVisualCartonInterno()
+        }
+
+    val logBingo =
+        if (rutaBingoCentral != null) {
+            File(rutaBingoCentral)
+        } else {
+            gestorFicheros.crearFic(Utilidades.generarFicheroLogBingo(),Utilidades.getCabeceraLogoBingo())
+        }
+
+    if (logBingo != null){
+        val txt = logBingo.listFiles { _, nombre -> nombre.startsWith("bomboBingoCentralUsuarios") }?.maxByOrNull { it.lastModified() }
+
+        val bingo = if (bombo is BomboCentral){
+            if (txt != null) {
+                Bingo(gestorConsola, bombo, gestorFicheros, txt, genVisualCarton)
+            }else{
+                Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)
+            }
+        }else{
+            Bingo(gestorConsola, bombo, gestorFicheros, logBingo, genVisualCarton)
+        }
+
+        try {
+            bingo.jugar()
+        }
+        catch (e: Exception) {
+            gestorConsola.imprimir("Error ${e.message}")
+        }
+    }else{
+        gestorConsola.imprimir("Error - No se encontro ningun archivo de texto ")
+    }
+
+
 }
